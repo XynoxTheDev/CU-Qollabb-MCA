@@ -2,10 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingCart, Menu, Search, X, LogOut, LayoutDashboard } from 'lucide-react';
+import { ShoppingCart, Menu, LogOut, LayoutDashboard } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
@@ -21,8 +20,6 @@ export default function Navbar() {
   const { getCartCount } = useCart();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,14 +30,6 @@ export default function Navbar() {
   }, []);
 
   const cartCount = getCartCount();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
-      setIsSearchOpen(false);
-    }
-  };
 
   return (
     <header
@@ -75,28 +64,6 @@ export default function Navbar() {
 
           {/* Right Side */}
           <div className="flex items-center gap-2">
-            {/* Search Toggle - Mobile */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-            >
-              {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
-            </Button>
-
-            {/* Search Bar - Desktop */}
-            <form onSubmit={handleSearch} className="hidden md:flex relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-              <Input 
-                type="search"
-                placeholder="Search..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-40 lg:w-48 h-9 pl-9 pr-3 bg-slate-50 border-slate-200 rounded-full text-sm focus:bg-white"
-              />
-            </form>
-
             {/* Cart */}
             <Link href="/cart" className="relative p-2 hover:bg-slate-100 rounded-full">
               <ShoppingCart className="h-5 w-5 text-slate-700" />
@@ -151,18 +118,6 @@ export default function Navbar() {
               </Button>
               <SheetContent side="right">
                 <div className="flex flex-col gap-4 mt-6">
-                  {/* Mobile Search */}
-                  <form onSubmit={handleSearch} className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                    <Input 
-                      type="search"
-                      placeholder="Search products..." 
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 h-11"
-                    />
-                  </form>
-
                   {/* Mobile Nav Links */}
                   <nav className="space-y-1">
                     {navLinks.map((link) => (
@@ -221,22 +176,6 @@ export default function Navbar() {
             </Sheet>
           </div>
         </div>
-
-        {/* Mobile Search Bar (Expandable) */}
-        {isSearchOpen && (
-          <div className="md:hidden pb-3">
-            <form onSubmit={handleSearch} className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-              <Input 
-                type="search"
-                placeholder="Search products..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 h-10 bg-slate-50"
-              />
-            </form>
-          </div>
-        )}
       </div>
     </header>
   );
