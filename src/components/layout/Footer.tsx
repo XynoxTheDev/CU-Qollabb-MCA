@@ -39,7 +39,7 @@ export default function Footer() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
                 Q
               </div>
-              <span className="text-xl font-bold text-white">Qollabb</span>
+              <span className="text-xl font-bold text-white">Shopiverse</span>
             </Link>
             <p className="text-slate-400 mb-4">
               Your one-stop shop for premium products at unbeatable prices. Shop with confidence.
@@ -106,7 +106,7 @@ export default function Footer() {
         <div className="border-t border-slate-800 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-slate-400 text-sm">
-              &copy; {new Date().getFullYear()} Qollabb. All rights reserved.
+              &copy; {new Date().getFullYear()} Shopiverse. All rights reserved.
             </p>
             <div className="flex gap-6">
               {footerLinks.customerService.map((link) => (

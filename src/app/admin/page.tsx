@@ -64,7 +64,7 @@ export default function AdminPage() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
                 Q
               </div>
-              <span className="text-xl font-bold text-slate-900">Qollabb</span>
+              <span className="text-xl font-bold text-slate-900">Shopiverse</span>
             </Link>
             <p className="text-xs text-slate-500 mt-1">Admin Dashboard</p>
           </div>

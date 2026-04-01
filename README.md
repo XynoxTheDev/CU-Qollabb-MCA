@@ -30,7 +30,7 @@ This project is a full-stack e-commerce web application developed as part of the
 ## 📦 Project Structure
 
 ```
-CU-Qollabb-MCA/
+CU-Shopiverse-MCA/
 ├── src/                           # Next.js application source
 │   ├── app/                       # App router pages
 │   │   ├── page.tsx               # Home page

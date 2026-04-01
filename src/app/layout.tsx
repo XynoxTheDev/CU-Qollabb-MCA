@@ -10,7 +10,7 @@ import { Toaster } from "@/components/ui/sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Qollabb - E-Commerce Store",
+  title: "Shopiverse - E-Commerce Store",
   description: "Your one-stop shop for premium products at unbeatable prices",
 };
 

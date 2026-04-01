@@ -32,7 +32,7 @@ export default function AdminProductsPage() {
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
   const [products, setProducts] = useState<Product[]>(initialProducts);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchSuery, setSearchSuery] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [newProduct, setNewProduct] = useState({
     name: '',
@@ -54,8 +54,8 @@ export default function AdminProductsPage() {
   }
 
   const filteredProducts = products.filter(p =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.category.toLowerCase().includes(searchQuery.toLowerCase())
+    p.name.toLowerCase().includes(searchSuery.toLowerCase()) ||
+    p.category.toLowerCase().includes(searchSuery.toLowerCase())
   );
 
   const handleDeleteProduct = (id: string) => {
@@ -90,9 +90,9 @@ export default function AdminProductsPage() {
           <div className="p-6 border-b">
             <Link href="/" className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
-                Q
+                S
               </div>
-              <span className="text-xl font-bold text-slate-900">Qollabb</span>
+              <span className="text-xl font-bold text-slate-900">Shopiverse</span>
             </Link>
             <p className="text-xs text-slate-500 mt-1">Admin Dashboard</p>
           </div>
@@ -201,8 +201,8 @@ export default function AdminProductsPage() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <Input 
                   placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  value={searchSuery}
+                  onChange={(e) => setSearchSuery(e.target.value)}
                   className="pl-10"
                 />
               </div>

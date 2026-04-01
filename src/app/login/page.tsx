@@ -48,7 +48,7 @@ export default function LoginPage() {
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white font-bold text-xl">
               Q
             </div>
-            <span className="text-2xl font-bold text-slate-900">Qollabb</span>
+            <span className="text-2xl font-bold text-slate-900">Shopiverse</span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900">Welcome Back</h1>
           <p className="text-slate-500 mt-2">Sign in to your account to continue</p>

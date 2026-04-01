@@ -41,9 +41,9 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
-              Q
+              S
             </div>
-            <span className="text-xl font-bold text-slate-900">Qollabb</span>
+            <span className="text-xl font-bold text-slate-900">Shopiverse</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
