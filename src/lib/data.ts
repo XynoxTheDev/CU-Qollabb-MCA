@@ -105,7 +105,7 @@ export const products: Product[] = [
     name: 'Wireless Charging Pad',
     description: 'Fast wireless charging pad compatible with all Qi-enabled devices. Sleek design with LED indicator.',
     price: 39.99,
-    image: 'https://images.unsplash.com/photo-1586816879360-004f5b0c51e3?w=800&h=800&fit=crop',
+    image: 'https://images.unsplash.com/photo-1591290619762-c588e3f8419a?w=800&h=800&fit=crop',
     category: 'Electronics',
     rating: 4.1,
     reviewCount: 78,
