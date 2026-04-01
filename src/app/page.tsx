@@ -98,7 +98,14 @@ export default function HomePage() {
       {/* Banner */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden bg-gradient-to-br from-primary via-primary to-primary/80">
+          <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden">
+            <Image
+              src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=1920&h=600&fit=crop"
+              alt="Banner"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/30" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center text-white">
                 <h2 className="text-2xl md:text-3xl font-bold mb-2">Flat 20% Off</h2>
