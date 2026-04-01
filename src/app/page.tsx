@@ -100,7 +100,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1920&h=600&fit=crop"
+              src="https://images.unsplash.com/photo-1556740758-180de3c4c0b4?w=1920&h=600&fit=crop"
               alt="Banner"
               fill
               className="object-cover"
