@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingCart, User, Menu, LogOut, LayoutDashboard, Search, Heart, Package } from 'lucide-react';
+import { ShoppingCart, Menu, Search, X, LogOut, LayoutDashboard } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,6 +15,8 @@ const navLinks = [
   { href: '/products', label: 'Shop' },
   { href: '/products?category=Electronics', label: 'Electronics' },
   { href: '/products?category=Fashion', label: 'Fashion' },
+  { href: '/products?category=Home%20&%20Garden', label: 'Home' },
+  { href: '/products?category=Sports', label: 'Sports' },
 ];
 
 export default function Navbar() {
@@ -24,6 +26,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,200 +42,29 @@ export default function Navbar() {
     e.preventDefault();
     if (searchQuery.trim()) {
       window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
+      setIsSearchOpen(false);
     }
   };
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
+      className={`sticky top-0 z-50 w-full transition-all duration-200 ${
+        isScrolled ? 'bg-white shadow-md' : 'bg-white'
       }`}
     >
-      {/* Top Bar */}
-      <div className="hidden lg:block bg-slate-900 text-white text-xs py-1">
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <span>Free shipping on orders over $50</span>
-            <span className="text-slate-400">|</span>
-            <span>24/7 Customer Support</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span>USD</span>
-            <span className="text-slate-400">|</span>
-            <span>English</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Navbar */}
-      <div className="border-b border-slate-100">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex h-16 md:h-20 items-center justify-between gap-4">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/70 text-white font-bold text-lg shadow-lg">
-                S
-              </div>
-              <span className="text-xl md:text-2xl font-bold text-slate-900 tracking-tight">Shopiverse</span>
-            </Link>
-
-            {/* Search Bar - Desktop */}
-            <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-4">
-              <div className="relative w-full">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                <Input 
-                  type="search"
-                  placeholder="Search products..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 h-10 bg-slate-50 border-slate-200 rounded-full focus:bg-white focus:ring-2 focus:ring-primary/20"
-                />
-              </div>
-            </form>
-
-            {/* Right Side Icons */}
-            <div className="flex items-center gap-2 md:gap-4">
-              {/* Wishlist - Desktop */}
-              <Link href="#" className="hidden md:flex p-2 hover:bg-slate-100 rounded-full transition-colors">
-                <Heart className="h-5 w-5 text-slate-700" />
-              </Link>
-
-              {/* Cart */}
-              <Link href="/cart" className="relative p-2 hover:bg-slate-100 rounded-full transition-colors">
-                <ShoppingCart className="h-5 w-5 text-slate-700" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white font-medium">
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
-
-              {/* User Menu - Desktop */}
-              {isAuthenticated ? (
-                <div className="hidden md:flex items-center gap-3">
-                  {user?.role === 'admin' && (
-                    <Link href="/admin">
-                      <Button variant="ghost" size="sm" className="text-slate-600 hover:text-primary">
-                        <LayoutDashboard className="h-4 w-4 mr-1" />
-                        Admin
-                      </Button>
-                    </Link>
-                  )}
-                  <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-full">
-                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white text-sm font-medium">
-                      {user?.name?.charAt(0).toUpperCase()}
-                    </div>
-                    <span className="text-sm font-medium text-slate-700">{user?.name?.split(' ')[0]}</span>
-                  </div>
-                  <Button variant="ghost" size="icon" onClick={logout} className="text-slate-500 hover:text-red-500">
-                    <LogOut className="h-4 w-4" />
-                  </Button>
-                </div>
-              ) : (
-                <div className="hidden md:flex items-center gap-2">
-                  <Link href="/login">
-                    <Button variant="ghost" size="sm" className="text-slate-600">
-                      Login
-                    </Button>
-                  </Link>
-                  <Link href="/register">
-                    <Button size="sm" className="rounded-full px-6">
-                      Sign Up
-                    </Button>
-                  </Link>
-                </div>
-              )}
-
-              {/* Mobile Menu Button */}
-              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  className="md:hidden"
-                  onClick={() => setIsMobileMenuOpen(true)}
-                >
-                  <Menu className="h-5 w-5" />
-                </Button>
-                <SheetContent side="right" className="w-[300px]">
-                  <div className="flex flex-col gap-6 mt-6">
-                    {/* Mobile Search */}
-                    <form onSubmit={handleSearch} className="relative">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                      <Input 
-                        type="search"
-                        placeholder="Search products..." 
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-10 h-11 bg-slate-50"
-                      />
-                    </form>
-
-                    {/* Mobile Nav Links */}
-                    <nav className="space-y-2">
-                      {navLinks.map((link) => (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                            pathname === link.href 
-                              ? 'bg-primary text-white' 
-                              : 'text-slate-600 hover:bg-slate-100'
-                          }`}
-                        >
-                          {link.label}
-                        </Link>
-                      ))}
-                    </nav>
-
-                    <hr className="border-slate-100" />
-
-                    {/* Mobile User Section */}
-                    {isAuthenticated ? (
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-3 px-4">
-                          <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white font-medium">
-                            {user?.name?.charAt(0).toUpperCase()}
-                          </div>
-                          <div>
-                            <p className="font-medium text-slate-900">{user?.name}</p>
-                            <p className="text-sm text-slate-500">{user?.email}</p>
-                          </div>
-                        </div>
-                        {user?.role === 'admin' && (
-                          <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg">
-                            <LayoutDashboard className="h-4 w-4" />
-                            Admin Dashboard
-                          </Link>
-                        )}
-                        <Button variant="outline" onClick={logout} className="w-full mx-4 flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50">
-                          <LogOut className="h-4 w-4" />
-                          Logout
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className="space-y-3 px-4">
-                        <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                          <Button variant="outline" className="w-full">Login</Button>
-                        </Link>
-                        <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}>
-                          <Button className="w-full">Sign Up</Button>
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                </SheetContent>
-              </Sheet>
+      <div className="container mx-auto px-4">
+        <div className="flex h-14 md:h-16 items-center justify-between gap-4">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-lg bg-primary text-white font-bold">
+              S
             </div>
-          </div>
-        </div>
-      </div>
+            <span className="text-lg font-bold text-slate-900 hidden sm:block">Shopiverse</span>
+          </Link>
 
-      {/* Category Navigation - Desktop */}
-      <div className="hidden md:block border-t border-slate-100">
-        <div className="container mx-auto px-6">
-          <nav className="flex items-center gap-8 h-12">
-            {navLinks.map((link) => (
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-6">
+            {navLinks.slice(0, 5).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -243,15 +75,172 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <div className="flex-1"></div>
-            <Link href="/products?category=Home%20&%20Garden" className="text-sm font-medium text-slate-600 hover:text-primary">
-              Home & Garden
-            </Link>
-            <Link href="/products?category=Sports" className="text-sm font-medium text-slate-600 hover:text-primary">
-              Sports
-            </Link>
           </nav>
+
+          {/* Right Side */}
+          <div className="flex items-center gap-2">
+            {/* Search Toggle - Mobile */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+            >
+              {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
+            </Button>
+
+            {/* Search Bar - Desktop */}
+            <form onSubmit={handleSearch} className="hidden md:flex relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <Input 
+                type="search"
+                placeholder="Search..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-40 lg:w-48 h-9 pl-9 pr-3 bg-slate-50 border-slate-200 rounded-full text-sm focus:bg-white"
+              />
+            </form>
+
+            {/* Cart */}
+            <Link href="/cart" className="relative p-2 hover:bg-slate-100 rounded-full">
+              <ShoppingCart className="h-5 w-5 text-slate-700" />
+              {cartCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white font-medium">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+
+            {/* User - Desktop */}
+            {isAuthenticated ? (
+              <div className="hidden md:flex items-center gap-2">
+                {user?.role === 'admin' && (
+                  <Link href="/admin">
+                    <Button variant="ghost" size="sm" className="text-xs h-8">
+                      <LayoutDashboard className="h-3 w-3 mr-1" />
+                      Admin
+                    </Button>
+                  </Link>
+                )}
+                <Link href="/profile" className="flex items-center gap-1.5 px-2 py-1 hover:bg-slate-100 rounded-full">
+                  <div className="h-7 w-7 rounded-full bg-primary flex items-center justify-center text-white text-xs font-medium">
+                    {user?.name?.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="text-sm text-slate-700 hidden lg:block">{user?.name?.split(' ')[0]}</span>
+                </Link>
+                <Button variant="ghost" size="icon" onClick={logout} className="h-8 w-8 text-slate-500 hover:text-red-500">
+                  <LogOut className="h-3.5 w-3.5" />
+                </Button>
+              </div>
+            ) : (
+              <div className="hidden md:flex items-center gap-2">
+                <Link href="/login">
+                  <Button variant="ghost" size="sm" className="text-sm h-9">Login</Button>
+                </Link>
+                <Link href="/register">
+                  <Button size="sm" className="text-sm h-9 px-4">Sign Up</Button>
+                </Link>
+              </div>
+            )}
+
+            {/* Mobile Menu */}
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className="lg:hidden"
+                onClick={() => setIsMobileMenuOpen(true)}
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+              <SheetContent side="right">
+                <div className="flex flex-col gap-4 mt-6">
+                  {/* Mobile Search */}
+                  <form onSubmit={handleSearch} className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                    <Input 
+                      type="search"
+                      placeholder="Search products..." 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-10 h-11"
+                    />
+                  </form>
+
+                  {/* Mobile Nav Links */}
+                  <nav className="space-y-1">
+                    {navLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                          pathname === link.href 
+                            ? 'bg-primary text-white' 
+                            : 'text-slate-600 hover:bg-slate-100'
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </nav>
+
+                  <hr className="border-slate-100" />
+
+                  {/* Mobile User Section */}
+                  {isAuthenticated ? (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3 px-3 py-2">
+                        <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-medium">
+                          {user?.name?.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <p className="font-medium text-slate-900">{user?.name}</p>
+                          <p className="text-xs text-slate-500">{user?.email}</p>
+                        </div>
+                      </div>
+                      {user?.role === 'admin' && (
+                        <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                          <LayoutDashboard className="h-4 w-4" />
+                          Admin Dashboard
+                        </Link>
+                      )}
+                      <Button variant="outline" onClick={logout} className="w-full flex items-center gap-2 text-red-600">
+                        <LogOut className="h-4 w-4" />
+                        Logout
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 px-3">
+                      <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Button variant="outline" className="w-full">Login</Button>
+                      </Link>
+                      <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Button className="w-full">Sign Up</Button>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
+
+        {/* Mobile Search Bar (Expandable) */}
+        {isSearchOpen && (
+          <div className="md:hidden pb-3">
+            <form onSubmit={handleSearch} className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <Input 
+                type="search"
+                placeholder="Search products..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 h-10 bg-slate-50"
+              />
+            </form>
+          </div>
+        )}
       </div>
     </header>
   );
