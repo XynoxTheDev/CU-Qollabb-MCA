@@ -116,8 +116,8 @@ export default function Navbar() {
               >
                 <Menu className="h-5 w-5" />
               </Button>
-              <SheetContent side="right">
-                <div className="flex flex-col gap-4 mt-6">
+              <SheetContent side="right" className="w-[280px] sm:w-[320px]">
+                <div className="flex flex-col gap-4 pt-12">
                   {/* Mobile Nav Links */}
                   <nav className="space-y-1">
                     {navLinks.map((link) => (
