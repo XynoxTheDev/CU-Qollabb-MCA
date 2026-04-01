@@ -1,13 +1,14 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { LayoutDashboard, Package, ShoppingCart, Users, Settings, TrendingUp, DollarSign, ShoppingBag } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, Users, Settings, TrendingUp, DollarSign, ShoppingBag, Menu, X } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { products, orders } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 const sidebarLinks = [
   { href: '/admin', icon: LayoutDashboard, label: 'Dashboard', exact: true },
@@ -18,6 +19,7 @@ const sidebarLinks = [
 export default function AdminPage() {
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated || user?.role !== 'admin') {
@@ -56,13 +58,68 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="flex">
-        {/* Sidebar */}
+      {/* Mobile Header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b flex items-center justify-between px-4 py-3">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
+            S
+          </div>
+          <span className="text-lg font-bold text-slate-900">Shopiverse</span>
+        </Link>
+        <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(true)}>
+          <Menu className="h-5 w-5" />
+        </Button>
+      </div>
+
+      {/* Mobile Menu Sheet */}
+      <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+        <SheetContent side="left" className="w-64">
+          <div className="flex flex-col h-full">
+            <div className="p-4 border-b">
+              <Link href="/" className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
+                  S
+                </div>
+                <span className="text-lg font-bold text-slate-900">Shopiverse</span>
+              </Link>
+              <p className="text-xs text-slate-500 mt-1">Admin Dashboard</p>
+            </div>
+            
+            <nav className="flex-1 p-4 space-y-1">
+              {sidebarLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                    link.exact 
+                      ? 'bg-primary text-white' 
+                      : 'text-slate-600 hover:bg-slate-100'
+                  }`}
+                >
+                  <link.icon className="h-5 w-5" />
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="p-4 border-t">
+              <Link href="/" className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors">
+                <Settings className="h-5 w-5" />
+                Back to Store
+              </Link>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      <div className="flex pt-14 md:pt-0">
+        {/* Desktop Sidebar */}
         <aside className="hidden md:flex flex-col w-64 bg-white border-r h-screen sticky top-0">
           <div className="p-6 border-b">
             <Link href="/" className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
-                Q
+                S
               </div>
               <span className="text-xl font-bold text-slate-900">Shopiverse</span>
             </Link>

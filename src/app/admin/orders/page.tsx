@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Package, Search, Eye, ChevronDown, ChevronUp } from 'lucide-react';
+import { Package, Search, Eye, ChevronDown, ChevronUp, Menu, Settings } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { orders as initialOrders } from '@/lib/data';
 import { Order } from '@/lib/types';
@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 const statusOptions = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
 
@@ -29,6 +30,7 @@ export default function AdminOrdersPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated || user?.role !== 'admin') {
@@ -65,13 +67,65 @@ export default function AdminOrdersPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <div className="flex">
-        {/* Sidebar */}
+      {/* Mobile Header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b flex items-center justify-between px-4 py-3">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
+            S
+          </div>
+          <span className="text-lg font-bold text-slate-900">Shopiverse</span>
+        </Link>
+        <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(true)}>
+          <Menu className="h-5 w-5" />
+        </Button>
+      </div>
+
+      {/* Mobile Menu Sheet */}
+      <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+        <SheetContent side="left" className="w-64">
+          <div className="flex flex-col h-full">
+            <div className="p-4 border-b">
+              <Link href="/" className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
+                  S
+                </div>
+                <span className="text-lg font-bold text-slate-900">Shopiverse</span>
+              </Link>
+              <p className="text-xs text-slate-500 mt-1">Admin Dashboard</p>
+            </div>
+            
+            <nav className="flex-1 p-4 space-y-1">
+              <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
+                <Package className="h-5 w-5" />
+                Dashboard
+              </Link>
+              <Link href="/admin/products" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
+                <Package className="h-5 w-5" />
+                Products
+              </Link>
+              <Link href="/admin/orders" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium bg-primary text-white">
+                <Package className="h-5 w-5" />
+                Orders
+              </Link>
+            </nav>
+
+            <div className="p-4 border-t">
+              <Link href="/" className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
+                <Settings className="h-5 w-5" />
+                Back to Store
+              </Link>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      <div className="flex pt-14 md:pt-0">
+        {/* Desktop Sidebar */}
         <aside className="hidden md:flex flex-col w-64 bg-white border-r h-screen sticky top-0">
           <div className="p-6 border-b">
             <Link href="/" className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
-                Q
+                S
               </div>
               <span className="text-xl font-bold text-slate-900">Shopiverse</span>
             </Link>
@@ -95,13 +149,14 @@ export default function AdminOrdersPage() {
 
           <div className="p-4 border-t">
             <Link href="/" className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
+              <Settings className="h-5 w-5" />
               Back to Store
             </Link>
           </div>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 md:p-8">
+        <main className="flex-1 p-4 md:p-8">
           <div className="mb-8">
             <h1 className="text-2xl md:text-3xl font-bold text-slate-900">Orders</h1>
             <p className="text-slate-500">Manage and track customer orders</p>
