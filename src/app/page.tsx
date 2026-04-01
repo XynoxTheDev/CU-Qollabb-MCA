@@ -100,12 +100,12 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1556740758-180de3c4c0b4?w=1920&h=600&fit=crop"
+              src="https://images.unsplash.com/photo-1574602305399-0bf26d7e5d2f?w=1920&h=600&fit=crop"
               alt="Banner"
               fill
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 bg-black/45" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center text-white">
                 <h2 className="text-2xl md:text-3xl font-bold mb-2">Flat 20% Off</h2>
