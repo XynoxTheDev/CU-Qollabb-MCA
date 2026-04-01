@@ -13,10 +13,6 @@ import { useCart } from '@/context/CartContext';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/products', label: 'Shop' },
-  { href: '/products?category=Electronics', label: 'Electronics' },
-  { href: '/products?category=Fashion', label: 'Fashion' },
-  { href: '/products?category=Home%20&%20Garden', label: 'Home' },
-  { href: '/products?category=Sports', label: 'Sports' },
 ];
 
 export default function Navbar() {
