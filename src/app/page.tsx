@@ -16,13 +16,13 @@ export default function HomePage() {
       <section className="relative h-[400px] md:h-[500px] flex items-center">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&h=1080&fit=crop"
+            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&h=1080&fit=crop"
             alt="Hero"
             fill
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-xl">
@@ -53,16 +53,23 @@ export default function HomePage() {
               <Link 
                 key={category.id} 
                 href={`/products?category=${category.name}`}
-                className="group relative aspect-[4/3] rounded-xl overflow-hidden"
+                className="group relative aspect-square rounded-xl overflow-hidden"
               >
                 <Image
-                  src={`https://images.unsplash.com/photo-${index === 0 ? '1511556820780-d912e42a498f' : index === 1 ? '1489987704035-624704577f4a' : index === 2 ? '1556909114-f6e7ad7d3686' : '1517838277466-310c03d9be04'}?w=400&h=300&fit=crop`}
+                  src={index === 0 
+                    ? 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&h=600&fit=crop'
+                    : index === 1 
+                    ? 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop'
+                    : index === 2 
+                    ? 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop'
+                    : 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&h=600&fit=crop'
+                  }
                   alt={category.name}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
                   <span className="text-white font-semibold text-lg">{category.name}</span>
                 </div>
               </Link>
@@ -93,7 +100,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1607082349566-187342175e2f?w=1920&h=600&fit=crop"
+              src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1920&h=600&fit=crop"
               alt="Banner"
               fill
               className="object-cover"

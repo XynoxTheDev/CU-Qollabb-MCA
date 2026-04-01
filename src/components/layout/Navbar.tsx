@@ -58,8 +58,8 @@ export default function Navbar() {
             <span className="text-lg font-bold text-slate-900 hidden sm:block">Shopiverse</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-6">
+          {/* Desktop Navigation - Centered */}
+          <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
             {navLinks.slice(0, 5).map((link) => (
               <Link
                 key={link.href}
