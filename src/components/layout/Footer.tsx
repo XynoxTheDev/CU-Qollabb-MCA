@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Send, CreditCard, Truck, Shield, RotateCcw } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CreditCard, Truck, Shield, RotateCcw, Video, Camera, MessageCircle, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const socialLinks = [
-  { name: 'Facebook', href: 'https://facebook.com' },
-  { name: 'Twitter', href: 'https://twitter.com' },
-  { name: 'Instagram', href: 'https://instagram.com' },
-  { name: 'YouTube', href: 'https://youtube.com' },
+  { name: 'Facebook', href: 'https://facebook.com', icon: Users },
+  { name: 'X (Twitter)', href: 'https://twitter.com', icon: MessageCircle },
+  { name: 'Instagram', href: 'https://instagram.com', icon: Camera },
+  { name: 'YouTube', href: 'https://youtube.com', icon: Video },
 ];
 
 const features = [
@@ -102,10 +102,10 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 hover:bg-primary transition-colors text-white text-xs font-medium"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 hover:bg-primary transition-colors text-white"
                   aria-label={social.name}
                 >
-                  {social.name.charAt(0)}
+                  <social.icon className="h-4 w-4" />
                 </a>
               ))}
             </div>
