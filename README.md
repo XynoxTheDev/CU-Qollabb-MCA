@@ -32,32 +32,32 @@ This project is a full-stack e-commerce web application developed as part of the
 ```
 CU-Qollabb-MCA/
 ├── src/                           # Next.js application source
-│   ├── app/                      # App router pages
-│   │   ├── page.tsx             # Home page
-│   │   ├── products/            # Products pages
-│   │   ├── cart/                # Shopping cart
-│   │   ├── checkout/            # Checkout page
-│   │   ├── login/               # Login page
-│   │   ├── register/            # Registration page
-│   │   └── admin/               # Admin dashboard
-│   ├── components/              # React components
-│   │   ├── ui/                  # shadcn/ui components
-│   │   ├── layout/              # Navbar, Footer
-│   │   └── products/            # Product components
-│   ├── lib/                     # Data and utilities
-│   │   ├── data.ts              # Mock products, users, orders
-│   │   └── types.ts             # TypeScript interfaces
-│   └── context/                 # React context providers
-│       ├── AuthContext.tsx      # Authentication state
-│       └── CartContext.tsx      # Shopping cart state
-├── public/                      # Static assets
-├── package.json                 # Dependencies
-├── next.config.ts               # Next.js configuration
-├── tailwind.config.ts           # Tailwind CSS configuration
-├── tsconfig.json                # TypeScript configuration
-├── components.json              # shadcn/ui configuration
-├── SPEC.md                      # Frontend specifications
-└── README.md                    # This file
+│   ├── app/                       # App router pages
+│   │   ├── page.tsx               # Home page
+│   │   ├── products/             # Products listing & detail pages
+│   │   ├── cart/                 # Shopping cart page
+│   │   ├── checkout/             # Checkout page
+│   │   ├── login/                # Login page
+│   │   ├── register/             # Registration page
+│   │   └── admin/                # Admin dashboard (overview, products, orders)
+│   ├── components/               # React components
+│   │   ├── ui/                   # shadcn/ui components (Button, Card, Input, etc.)
+│   │   ├── layout/               # Navbar, Footer
+│   │   └── products/             # Product components (ProductCard)
+│   ├── lib/                      # Data and utilities
+│   │   ├── data.ts               # Mock products, users, orders data
+│   │   ├── types.ts              # TypeScript interfaces
+│   │   └── utils.ts              # Utility functions
+│   └── context/                  # React context providers
+│       ├── AuthContext.tsx       # Authentication state management
+│       └── CartContext.tsx       # Shopping cart state management
+├── public/                       # Static assets (images, icons)
+├── package.json                  # Project dependencies
+├── next.config.ts                # Next.js configuration
+├── tsconfig.json                 # TypeScript configuration
+├── components.json               # shadcn/ui configuration
+├── tailwind.config.ts            # Tailwind CSS configuration
+└── README.md                     # Project documentation
 ```
 
 ## 🚀 Features Implemented
@@ -138,13 +138,13 @@ The application currently uses mock data for demonstration purposes:
 
 ### Products
 - 22 sample products across 4 categories (Electronics, Fashion, Home & Garden, Sports)
-- Product details include name, description, price, original price, rating, stock
+- Product details include name, description, price, original price (sale price), rating, review count, stock status
 
 ### Categories
-- Electronics (8 products)
-- Fashion (6 products)  
-- Home & Garden (4 products)
-- Sports (4 products)
+- Electronics (8 products): Headphones, Smart Watch, Bluetooth Speaker, Earbuds, Keyboard, Camera, Smart Hub, Charging Pad
+- Fashion (6 products): Denim Jacket, Wallet, Running Shoes, Sunglasses, T-Shirt Pack, Crossbody Bag
+- Home & Garden (4 products): Table Lamp, Indoor Plants, Throw Blanket, Kitchen Knife Set
+- Sports (4 products): Yoga Mat, Dumbbells, Tennis Racket, Cycling Helmet
 
 ## 🎨 UI/UX Features
 
@@ -184,4 +184,4 @@ This project is for educational purposes as part of the MCA program.
 
 ---
 
-**Last Updated**: April 1, 2026
+**Last Updated**: April 2026
