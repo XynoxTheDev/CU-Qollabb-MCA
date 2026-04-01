@@ -101,18 +101,6 @@ export const products: Product[] = [
     createdAt: '2026-02-25',
   },
   {
-    id: '8',
-    name: 'Wireless Charging Pad',
-    description: 'Fast wireless charging pad compatible with all Qi-enabled devices. Sleek design with LED indicator.',
-    price: 39.99,
-    image: 'https://images.unsplash.com/photo-1618556450994-a6a128ef0d9d?w=800&h=800&fit=crop',
-    category: 'Electronics',
-    rating: 4.1,
-    reviewCount: 78,
-    stock: 150,
-    createdAt: '2026-02-20',
-  },
-  {
     id: '9',
     name: 'Classic Denim Jacket',
     description: 'Timeless denim jacket with premium quality denim, comfortable fit, and versatile style for any occasion.',
