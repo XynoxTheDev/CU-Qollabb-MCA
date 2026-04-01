@@ -6,22 +6,30 @@ import { ArrowRight } from 'lucide-react';
 import { products, categories } from '@/lib/data';
 import ProductCard from '@/components/products/ProductCard';
 import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 
 export default function HomePage() {
   const featuredProducts = products.slice(0, 8);
+  const [heroError, setHeroError] = useState(false);
+  const [bannerError, setBannerError] = useState(false);
 
   return (
     <div className="min-h-screen">
       {/* Hero Section - Minimal */}
       <section className="relative h-[400px] md:h-[500px] flex items-center">
         <div className="absolute inset-0">
-          <Image
-            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&h=1080&fit=crop"
-            alt="Hero"
-            fill
-            className="object-cover"
-            priority
-          />
+          {heroError ? (
+            <div className="absolute inset-0 bg-slate-800" />
+          ) : (
+            <Image
+              src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&h=1080&fit=crop"
+              alt="Hero"
+              fill
+              className="object-cover"
+              priority
+              onError={() => setHeroError(true)}
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
         </div>
         <div className="container mx-auto px-4 relative z-10">
@@ -99,12 +107,17 @@ export default function HomePage() {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1920&h=600&fit=crop"
-              alt="Banner"
-              fill
-              className="object-cover"
-            />
+            {bannerError ? (
+              <div className="absolute inset-0 bg-primary" />
+            ) : (
+              <Image
+                src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1920&h=600&fit=crop"
+                alt="Banner"
+                fill
+                className="object-cover"
+                onError={() => setBannerError(true)}
+              />
+            )}
             <div className="absolute inset-0 bg-black/45" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center text-white">
