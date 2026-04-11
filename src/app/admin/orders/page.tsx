@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Package, Search, Eye, ChevronDown, ChevronUp, Menu, Settings } from 'lucide-react';
@@ -207,7 +207,7 @@ export default function AdminOrdersPage() {
                 </TableHeader>
                 <TableBody>
                   {filteredOrders.map((order) => (
-                    <>
+                    <React.Fragment key={order.id}>
                       <TableRow key={order.id}>
                         <TableCell className="font-medium">{order.id}</TableCell>
                         <TableCell>{order.shippingAddress.fullName}</TableCell>
