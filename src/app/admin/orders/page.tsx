@@ -277,7 +277,7 @@ export default function AdminOrdersPage() {
                           </TableCell>
                         </TableRow>
                       )}
-                    </React.Fragment>
+                    </Fragment>
                   ))}
                 </TableBody>
               </Table>
