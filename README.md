@@ -1,13 +1,13 @@
-# 🛒 Shopiverse - E-Commerce Platform
+# Shopiverse — E-Commerce Platform
 
-A modern, full-stack e-commerce web application built with Next.js, Tailwind CSS, shadcn/ui, and integrated backend with SQLite + Prisma.
+A full-stack e-commerce web application built with Next.js, TypeScript, Tailwind CSS, shadcn/ui, and a REST API backed by SQLite and Prisma ORM. Developed as a portfolio project for the MCA program at Chandigarh University.
 
 <div align="center">
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue?style=for-the-badge&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38bdf8?style=for-the-badge&logo=tailwind-css)
-![shadcn/ui](https://img.shields.io/badge/shadcn/ui-latest-black?style=for-the-badge)
+![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-latest-black?style=for-the-badge)
 ![Prisma](https://img.shields.io/badge/Prisma-5-2d3748?style=for-the-badge&logo=prisma)
 ![SQLite](https://img.shields.io/badge/SQLite-003b57?style=for-the-badge&logo=sqlite)
 
@@ -15,117 +15,119 @@ A modern, full-stack e-commerce web application built with Next.js, Tailwind CSS
 
 ---
 
-## 📚 Table of Contents
+## Table of Contents
 
-1. [Project Overview](#-project-overview)
-2. [Tech Stack](#-tech-stack)
-3. [Features](#-features)
-4. [Project Structure](#-project-structure)
-5. [API Endpoints](#-api-endpoints)
-6. [Pages & Routes](#-pages--routes)
-7. [Getting Started](#-getting-started)
-8. [Environment Variables](#-environment-variables)
-9. [Demo Accounts](#-demo-accounts)
-10. [Database](#-database)
-11. [Development Progress](#-development-progress)
+1. [Overview](#overview)
+2. [Tech Stack](#tech-stack)
+3. [Features](#features)
+4. [Project Structure](#project-structure)
+5. [API Reference](#api-reference)
+6. [Pages and Routes](#pages-and-routes)
+7. [Getting Started](#getting-started)
+8. [Environment Variables](#environment-variables)
+9. [Database](#database)
+10. [Demo Accounts](#demo-accounts)
+11. [Development Roadmap](#development-roadmap)
 
 ---
 
-## 📋 Project Overview
+## Overview
 
-**Shopiverse** is a comprehensive e-commerce platform developed as a portfolio project for the MCA program. It provides a complete shopping experience with product browsing, cart management, checkout process, user authentication, and a full backend API.
+Shopiverse is a comprehensive e-commerce platform that covers the complete shopping lifecycle — product discovery, cart management, checkout, order tracking, and an admin dashboard for store management. It is built with a production-oriented architecture: server-side API routes, JWT-based authentication, a relational database via Prisma ORM, and a component-driven frontend using shadcn/ui.
 
-### Key Capabilities
+### Core Capabilities
 
 | Capability | Description |
-|------------|-------------|
-| 🛍️ **Product Catalog** | Browse 20+ products across 4 categories with advanced filtering |
-| 🛒 **Shopping Cart** | Add/remove items, adjust quantities, persistent cart |
-| 💳 **Checkout** | Complete order with shipping info and payment selection |
-| 👤 **Authentication** | JWT-based login/registration |
-| 📊 **Admin Dashboard** | Manage products and orders with full CRUD operations |
-| 🔌 **REST API** | Full backend API with authentication |
+|---|---|
+| Product Catalog | Browse 20+ products across 4 categories with filtering and search |
+| Shopping Cart | Add, remove, and adjust item quantities with persistent cart state |
+| Checkout | Complete orders with shipping details and payment method selection |
+| Authentication | JWT-based user registration and login with bcrypt password hashing |
+| Admin Dashboard | Full CRUD for products and orders with status management |
+| REST API | Authenticated backend API for all core resources |
 
 ---
 
-## 🛠️ Tech Stack
-
-### Core Technologies
+## Tech Stack
 
 | Category | Technology | Version |
-|----------|------------|---------|
-| Framework | Next.js | 16.x |
+|---|---|---|
+| Framework | Next.js (App Router) | 16.x |
 | Language | TypeScript | 5.5 |
 | Styling | Tailwind CSS | 4.x |
 | UI Components | shadcn/ui | Latest |
-| Database | SQLite | - |
+| Database | SQLite | — |
 | ORM | Prisma | 5.x |
-| Authentication | JWT (jose) | 6.x |
+| Authentication | JWT via jose | 6.x |
 | Password Hashing | bcryptjs | 3.x |
+| Icons | Lucide React | Latest |
+| Notifications | Sonner | Latest |
 
 ---
 
-## 🚀 Features
+## Features
 
-### Customer Features
-
-| Feature | Description |
-|---------|-------------|
-| **Home Page** | Hero banner with CTA, category navigation, featured products, promotional sections |
-| **Product Catalog** | Grid display with category filters, price range slider, search functionality |
-| **Product Details** | Image gallery, product information, ratings, quantity selector, add to cart |
-| **Shopping Cart** | Item list with quantity adjustment, remove items, order summary |
-| **Checkout Flow** | Shipping form, payment method selection, order confirmation |
-| **User Authentication** | JWT-based login/registration with secure password hashing |
-
-### Admin Features
+### Customer-Facing
 
 | Feature | Description |
-|---------|-------------|
-| **Dashboard** | Overview stats (revenue, orders, products), recent orders table |
-| **Product Management** | View all products, add new products, delete products |
-| **Order Management** | View all orders, filter by status, update order status |
+|---|---|
+| Home Page | Hero banner, category navigation, featured products, and promotional sections |
+| Product Listing | Grid layout with category filters, price range filter, and keyword search |
+| Product Detail | Image gallery, product info, ratings, quantity selector, and add-to-cart |
+| Shopping Cart | Line items with quantity adjustment, removal, and live order summary |
+| Checkout | Shipping address form, payment method selection, and order confirmation |
+| User Accounts | Registration and login with secure JWT sessions |
 
-### Backend Features
+### Admin Panel
 
 | Feature | Description |
-|---------|-------------|
-| **REST API** | Full CRUD for products and orders |
-| **JWT Authentication** | Secure token-based auth with 7-day expiry |
-| **Password Security** | bcrypt hashing |
-| **Database** | SQLite with Prisma ORM |
+|---|---|
+| Dashboard | Summary statistics for revenue, orders, and products with a recent orders table |
+| Product Management | View, add, and delete products |
+| Order Management | View all orders, filter by status, and update order status |
+
+### Backend / API
+
+| Feature | Description |
+|---|---|
+| REST API | Full CRUD operations for products and orders |
+| JWT Authentication | Token-based auth with 7-day expiry |
+| Password Security | Passwords stored as bcrypt hashes |
+| Relational Database | SQLite managed through Prisma ORM with migrations |
 
 ---
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 shopiverse/
 ├── prisma/
-│   ├── schema.prisma          # Database schema
-│   ├── seed.ts               # Seed data
-│   ├── dev.db                # SQLite database
-│   └── migrations/           # Prisma migrations
+│   ├── schema.prisma          # Database schema (User, Product, Order, OrderItem)
+│   ├── seed.ts                # Seed script for demo data
+│   ├── dev.db                 # SQLite database file
+│   └── migrations/            # Prisma migration history
 │
 ├── src/
-│   ├── app/                     # Next.js App Router
-│   │   ├── api/                 # API Routes
+│   ├── app/                   # Next.js App Router
+│   │   ├── api/               # API route handlers
 │   │   │   ├── auth/
-│   │   │   │   ├── login/      # POST - User login
-│   │   │   │   └── register/   # POST - User registration
-│   │   │   ├── products/       # GET, POST - Products CRUD
-│   │   │   └── orders/         # GET, POST - Orders CRUD
+│   │   │   │   ├── login/     # POST /api/auth/login
+│   │   │   │   └── register/  # POST /api/auth/register
+│   │   │   ├── products/      # GET, POST /api/products
+│   │   │   │   └── [id]/      # GET /api/products/[id]
+│   │   │   └── orders/        # GET, POST /api/orders
+│   │   │       └── [id]/      # GET, PUT /api/orders/[id]
+│   │   ├── layout.tsx         # Root layout
 │   │   ├── page.tsx           # Home page
-│   │   ├── layout.tsx          # Root layout
-│   │   ├── products/           # Products pages
-│   │   ├── cart/page.tsx      # Shopping cart
-│   │   ├── checkout/page.tsx  # Checkout
-│   │   ├── login/page.tsx     # Login
-│   │   ├── register/page.tsx  # Registration
-│   │   └── admin/             # Admin dashboard
+│   │   ├── products/          # Product listing and detail pages
+│   │   ├── cart/              # Shopping cart page
+│   │   ├── checkout/          # Checkout page
+│   │   ├── login/             # Login page
+│   │   ├── register/          # Registration page
+│   │   └── admin/             # Admin dashboard, products, orders
 │   │
 │   ├── components/
-│   │   ├── ui/                 # shadcn/ui components
+│   │   ├── ui/                # shadcn/ui primitive components
 │   │   ├── layout/
 │   │   │   ├── Navbar.tsx
 │   │   │   └── Footer.tsx
@@ -133,124 +135,135 @@ shopiverse/
 │   │       └── ProductCard.tsx
 │   │
 │   ├── context/
-│   │   ├── AuthContext.tsx
-│   │   └── CartContext.tsx
+│   │   ├── AuthContext.tsx    # Global auth state and actions
+│   │   └── CartContext.tsx    # Global cart state and actions
 │   │
 │   └── lib/
-│       ├── db.ts               # Prisma client
-│       ├── auth.ts             # JWT utilities
-│       ├── authMiddleware.ts  # Auth middleware
-│       ├── data.ts             # Mock data (for reference)
-│       ├── types.ts
-│       └── utils.ts
+│       ├── db.ts              # Prisma client instance
+│       ├── auth.ts            # JWT sign and verify utilities
+│       ├── authMiddleware.ts  # Route-level auth enforcement
+│       ├── types.ts           # Shared TypeScript types
+│       └── utils.ts           # General utility functions
 │
-├── .env                        # Environment variables
-├── package.json
+├── .env                       # Environment variables (not committed)
 ├── next.config.ts
+├── tailwind.config.ts
 ├── tsconfig.json
-└── tailwind.config.ts
+└── package.json
 ```
 
 ---
 
-## 🔌 API Endpoints
+## API Reference
 
 ### Authentication
 
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| POST | `/api/auth/register` | Register new user | Public |
-| POST | `/api/auth/login` | Login user, returns JWT | Public |
+| Method | Endpoint | Description | Auth Required |
+|---|---|---|---|
+| POST | `/api/auth/register` | Register a new user account | No |
+| POST | `/api/auth/login` | Authenticate and receive a JWT | No |
 
 ### Products
 
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/products` | List all products (with filters) | Public |
-| GET | `/api/products/[id]` | Get single product | Public |
+| Method | Endpoint | Description | Auth Required |
+|---|---|---|---|
+| GET | `/api/products` | Retrieve all products (supports filters) | No |
+| GET | `/api/products/[id]` | Retrieve a single product by ID | No |
 
 ### Orders
 
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/orders` | List user's orders | Required |
-| POST | `/api/orders` | Create new order | Required |
-| GET | `/api/orders/[id]` | Get single order | Required |
-| PUT | `/api/orders/[id]` | Update order status | Admin |
+| Method | Endpoint | Description | Auth Required |
+|---|---|---|---|
+| GET | `/api/orders` | Retrieve the authenticated user's orders | Yes |
+| POST | `/api/orders` | Create a new order | Yes |
+| GET | `/api/orders/[id]` | Retrieve a specific order by ID | Yes |
+| PUT | `/api/orders/[id]` | Update order status | Admin only |
 
-### Request Headers
+### Authentication Header
+
+All protected endpoints require the following header:
 
 ```http
 Authorization: Bearer <jwt_token>
 ```
 
+### Query Parameters — `GET /api/products`
+
+| Parameter | Type | Description |
+|---|---|---|
+| `category` | string | Filter by product category |
+| `search` | string | Keyword search on name and description |
+| `minPrice` | number | Minimum price filter |
+| `maxPrice` | number | Maximum price filter |
+| `sort` | string | Sort order: `price_asc`, `price_desc`, `rating` |
+
 ---
 
-## 📱 Pages & Routes
+## Pages and Routes
 
 ### Customer Pages
 
-| Route | Page | Description |
-|-------|------|-------------|
-| `/` | Home | Landing page with hero, categories, products |
-| `/products` | Products | Product listing with filters |
-| `/products/[id]` | Product Detail | Individual product information |
-| `/cart` | Cart | Shopping cart |
-| `/checkout` | Checkout | Order completion |
-| `/login` | Login | User authentication |
-| `/register` | Register | New user registration |
+| Route | Description |
+|---|---|
+| `/` | Landing page with hero banner, category cards, and featured products |
+| `/products` | Full product catalog with filtering and search |
+| `/products/[id]` | Product detail with image gallery and add-to-cart |
+| `/cart` | Shopping cart with quantity management and order summary |
+| `/checkout` | Checkout form with shipping and payment input |
+| `/login` | User login |
+| `/register` | New user registration |
 
 ### Admin Pages
 
-| Route | Page | Description |
-|-------|------|-------------|
-| `/admin` | Dashboard | Overview statistics |
-| `/admin/products` | Products | Product CRUD |
-| `/admin/orders` | Orders | Order management |
+| Route | Description |
+|---|---|
+| `/admin` | Dashboard with statistics and recent orders |
+| `/admin/products` | Product listing and management |
+| `/admin/orders` | Order listing with status update controls |
 
 ---
 
-## 🏁 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- **Node.js** 18.x or later
-- **npm** 9.x or later
+- Node.js 18.x or later
+- npm 9.x or later
 
 ### Installation
 
-1. **Clone the repository**
+1. Clone the repository:
+
    ```bash
    git clone https://github.com/XynoxTheDev/CU-Qollabb-MCA.git
    cd CU-Qollabb-MCA
    ```
 
-2. **Install dependencies**
+2. Install dependencies:
+
    ```bash
    npm install
    ```
 
-3. **Setup database**
+3. Configure environment variables (see [Environment Variables](#environment-variables)).
+
+4. Set up the database:
+
    ```bash
-   # Generate Prisma client
    npx prisma generate
-
-   # Run migrations
    npx prisma migrate dev
-
-   # Seed database
    npx tsx prisma/seed.ts
    ```
 
-4. **Start development server**
+5. Start the development server:
+
    ```bash
    npm run dev
    ```
 
-5. **Open in browser**
-   Visit [http://localhost:3000](http://localhost:3000)
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Build for Production
+### Production Build
 
 ```bash
 npm run build
@@ -259,61 +272,67 @@ npm start
 
 ---
 
-## 🔧 Environment Variables
+## Environment Variables
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the project root with the following variables:
 
 ```env
-# Database
+# Database connection
 DATABASE_URL="file:./prisma/dev.db"
 
-# JWT Secret (change in production)
+# JWT signing secret — use a strong random value in production
 JWT_SECRET="your-secret-key-change-in-production"
 ```
 
----
-
-## 👤 Demo Accounts
-
-| Role | Email | Password | Access |
-|------|-------|----------|--------|
-| Customer | `john@example.com` | `password123` | Customer features |
-| Admin | `admin@example.com` | `admin123` | Full dashboard + API |
+> **Note:** Never commit the `.env` file to version control. The `.gitignore` already excludes it.
 
 ---
 
-## 🗄️ Database
+## Database
 
 ### Schema
 
-- **User**: id, email, name, password, role, avatar, timestamps
-- **Product**: id, name, description, price, originalPrice, image, images, category, rating, reviewCount, stock, timestamps
-- **Order**: id, userId, total, status, shippingAddress, paymentMethod, timestamps
-- **OrderItem**: id, orderId, productId, quantity, price
+| Model | Key Fields |
+|---|---|
+| `User` | `id`, `email`, `name`, `password` (hashed), `role`, `avatar`, `createdAt` |
+| `Product` | `id`, `name`, `description`, `price`, `originalPrice`, `image`, `images`, `category`, `rating`, `reviewCount`, `stock` |
+| `Order` | `id`, `userId`, `total`, `status`, `shippingAddress`, `paymentMethod`, `createdAt` |
+| `OrderItem` | `id`, `orderId`, `productId`, `quantity`, `price` (cascade delete on order) |
 
-### Seeded Data
+### Seed Data
 
-- 2 users (admin + customer)
-- 20 products across 4 categories
+Running `npx tsx prisma/seed.ts` populates the database with:
+
+- 2 user accounts (one customer, one admin)
+- 20 products spread across 4 categories
 
 ---
 
-## 📈 Development Progress
+## Demo Accounts
 
-| Phase | Status | Description |
-|-------|--------|-------------|
-| Phase 1: Frontend Design | ✅ Completed | All pages, components, styling |
-| Phase 2: Backend Development | ✅ Completed | API, SQLite/Prisma, JWT auth |
-| Phase 3: Payment Integration | 🔄 Planned | Stripe/PayPal |
-| Phase 4: Advanced Features | 🔄 Planned | Profile, reviews, tracking |
-| Phase 5: Testing & Deployment | 🔄 Planned | Tests, CI/CD |
+| Role | Email | Password |
+|---|---|---|
+| Customer | `john@example.com` | `password123` |
+| Admin | `admin@example.com` | `admin123` |
+
+> These credentials are for local development and demonstration only.
+
+---
+
+## Development Roadmap
+
+| Phase | Status | Scope |
+|---|---|---|
+| Phase 1 — Frontend | Completed | All pages, components, and styling |
+| Phase 2 — Backend | Completed | REST API, SQLite/Prisma, JWT authentication |
+| Phase 3 — Payments | Planned | Stripe or PayPal integration |
+| Phase 4 — Advanced Features | Planned | User profiles, product reviews, order tracking |
+| Phase 5 — Testing and Deployment | Planned | Unit/integration tests, CI/CD pipeline, production hosting |
 
 ---
 
 <div align="center">
 
-**Built with ❤️ using Next.js + Tailwind CSS + Prisma + SQLite**
-
-*Last Updated: April 2026*
+Built with Next.js · Tailwind CSS · Prisma · SQLite
 
 </div>
