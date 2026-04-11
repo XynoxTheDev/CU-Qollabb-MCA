@@ -207,7 +207,7 @@ export default function AdminOrdersPage() {
                 </TableHeader>
                 <TableBody>
                   {filteredOrders.map((order) => (
-                    <React.Fragment key={order.id}>
+                    <Fragment key={order.id}>
                       <TableRow key={order.id}>
                         <TableCell className="font-medium">{order.id}</TableCell>
                         <TableCell>{order.shippingAddress.fullName}</TableCell>
@@ -277,7 +277,7 @@ export default function AdminOrdersPage() {
                           </TableCell>
                         </TableRow>
                       )}
-                    </>
+                    </React.Fragment>
                   ))}
                 </TableBody>
               </Table>
