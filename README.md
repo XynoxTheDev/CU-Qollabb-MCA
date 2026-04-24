@@ -6,10 +6,13 @@ Shopiverse covers the complete shopping lifecycle — product catalog, cart, Str
 
 <div align="center">
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.2.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
-[![MIT License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![Last Commit](https://img.shields.io/github/last-commit/XynoxTheDev/CU-Qollabb-MCA?style=for-the-badge)](https://github.com/XynoxTheDev/CU-Qollabb-MCA/commits/main)
-[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-green?style=for-the-badge)](https://github.com/XynoxTheDev/CU-Qollabb-MCA/pulls)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.2-brightgreen?style=flat&logo=next.js&logoColor=white)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19.2.4-brightgreen?style=flat&logo=react&logoColor=white)](https://react.dev)
+[![Prisma](https://img.shields.io/badge/Prisma-5.22.0-brightgreen?style=flat&logo=prisma&logoColor=white)](https://prisma.io)
+[![Stripe](https://img.shields.io/badge/Stripe-22.1.0-brightgreen?style=flat&logo=stripe&logoColor=white)](https://stripe.com)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/XynoxTheDev/CU-Qollabb-MCA?style=flat)](https://github.com/XynoxTheDev/CU-Qollabb-MCA/commits/main)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen?style=flat)](https://github.com/XynoxTheDev/CU-Qollabb-MCA/pulls)
 
 </div>
 
