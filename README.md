@@ -1,15 +1,22 @@
-# Shopiverse — E-Commerce Platform
+# Shopiverse
 
-A full-stack e-commerce web application built with Next.js, TypeScript, Tailwind CSS, shadcn/ui, and a REST API backed by SQLite and Prisma ORM. Developed as a portfolio project for the MCA program at Chandigarh University.
+A production-ready full-stack e-commerce platform for developers who want to learn by building. Covers the complete shopping lifecycle — product catalog, cart, checkout, orders, and an admin dashboard — with a REST API, JWT auth, and SQLite via Prisma.
+
+> A Next.js e-commerce template built for learning and portfolio projects.
 
 <div align="center">
 
-![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue?style=for-the-badge&logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38bdf8?style=for-the-badge&logo=tailwind-css)
-![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-latest-black?style=for-the-badge)
-![Prisma](https://img.shields.io/badge/Prisma-5-2d3748?style=for-the-badge&logo=prisma)
-![SQLite](https://img.shields.io/badge/SQLite-003b57?style=for-the-badge&logo=sqlite)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)](https://typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38bdf8?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-latest-black?style=for-the-badge)](https://ui.shadcn.com)
+[![Prisma](https://img.shields.io/badge/Prisma-5-2d3748?style=for-the-badge&logo=prisma)](https://prisma.io)
+[![SQLite](https://img.shields.io/badge/SQLite-003b57?style=for-the-badge&logo=sqlite)](https://sqlite.org)
+[![MIT License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Open Issues](https://img.shields.io/github/issues/XynoxTheDev/CU-Qollabb-MCA?style=for-the-badge)](https://github.com/XynoxTheDev/CU-Qollabb-MCA/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/XynoxTheDev/CU-Qollabb-MCA?style=for-the-badge)](https://github.com/XynoxTheDev/CU-Qollabb-MCA/commits/main)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-green?style=for-the-badge)](https://github.com/XynoxTheDev/CU-Qollabb-MCA/pulls)
 
 </div>
 
@@ -27,22 +34,24 @@ A full-stack e-commerce web application built with Next.js, TypeScript, Tailwind
 8. [Environment Variables](#environment-variables)
 9. [Database](#database)
 10. [Demo Accounts](#demo-accounts)
-11. [Development Roadmap](#development-roadmap)
+11. [Contributing](#contributing)
+12. [License](#license)
+13. [Development Roadmap](#development-roadmap)
 
 ---
 
 ## Overview
 
-Shopiverse is a comprehensive e-commerce platform that covers the complete shopping lifecycle — product discovery, cart management, checkout, order tracking, and an admin dashboard for store management. It is built with a production-oriented architecture: server-side API routes, JWT-based authentication, a relational database via Prisma ORM, and a component-driven frontend using shadcn/ui.
+Shopiverse is a complete e-commerce platform covering product discovery, cart management, checkout, order tracking, and an admin dashboard. It uses a server-side API architecture with App Router, JWT authentication, a relational database via Prisma ORM, and a component-driven frontend with shadcn/ui. Developers looking for a well-structured Next.js portfolio project or a real-world e-commerce reference implementation will find it most useful.
 
 ### Core Capabilities
 
 | Capability | Description |
 |---|---|
 | Product Catalog | Browse 20+ products across 4 categories with filtering and search |
-| Shopping Cart | Add, remove, and adjust item quantities with persistent cart state |
-| Checkout | Complete orders with shipping details and payment method selection |
-| Authentication | JWT-based user registration and login with bcrypt password hashing |
+| Shopping Cart | Add, remove, and adjust quantities with persistent state |
+| Checkout | Complete orders with shipping details and payment selection |
+| Authentication | JWT-based registration and login with bcrypt password hashing |
 | Admin Dashboard | Full CRUD for products and orders with status management |
 | REST API | Authenticated backend API for all core resources |
 
@@ -52,14 +61,15 @@ Shopiverse is a comprehensive e-commerce platform that covers the complete shopp
 
 | Category | Technology | Version |
 |---|---|---|
-| Framework | Next.js (App Router) | 16.x |
-| Language | TypeScript | 5.5 |
-| Styling | Tailwind CSS | 4.x |
+| Framework | Next.js (App Router) | 16.2 |
+| Language | TypeScript | 5 |
+| UI Framework | React | 19 |
+| Styling | Tailwind CSS | 4 |
 | UI Components | shadcn/ui | Latest |
 | Database | SQLite | — |
-| ORM | Prisma | 5.x |
-| Authentication | JWT via jose | 6.x |
-| Password Hashing | bcryptjs | 3.x |
+| ORM | Prisma | 5 |
+| Authentication | JWT via jose | 6 |
+| Password Hashing | bcryptjs | 3 |
 | Icons | Lucide React | Latest |
 | Notifications | Sonner | Latest |
 
@@ -72,7 +82,7 @@ Shopiverse is a comprehensive e-commerce platform that covers the complete shopp
 | Feature | Description |
 |---|---|
 | Home Page | Hero banner, category navigation, featured products, and promotional sections |
-| Product Listing | Grid layout with category filters, price range filter, and keyword search |
+| Product Listing | Grid layout with category filters, price range, and keyword search |
 | Product Detail | Image gallery, product info, ratings, quantity selector, and add-to-cart |
 | Shopping Cart | Line items with quantity adjustment, removal, and live order summary |
 | Checkout | Shipping address form, payment method selection, and order confirmation |
@@ -225,6 +235,18 @@ Authorization: Bearer <jwt_token>
 
 ## Getting Started
 
+### Quick Start
+
+```bash
+git clone https://github.com/XynoxTheDev/CU-Qollabb-MCA.git
+cd CU-Qollabb-MCA
+npm install
+npx prisma generate && npx prisma migrate dev && npx tsx prisma/seed.ts
+npm run dev
+```
+
+> [!NOTE] After running `npm run dev`, open [http://localhost:3000](http://localhost:3000) in your browser. The page is up when the Shopiverse navbar and hero banner are visible.
+
 ### Prerequisites
 
 - Node.js 18.x or later
@@ -245,7 +267,7 @@ Authorization: Bearer <jwt_token>
    npm install
    ```
 
-3. Configure environment variables (see [Environment Variables](#environment-variables)).
+3. Configure environment variables — see [Environment Variables](#environment-variables).
 
 4. Set up the database:
 
@@ -263,6 +285,8 @@ Authorization: Bearer <jwt_token>
 
 6. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+> [!NOTE] The Shopiverse navbar and hero banner indicate the dev server is running correctly.
+
 ### Production Build
 
 ```bash
@@ -274,17 +298,14 @@ npm start
 
 ## Environment Variables
 
-Create a `.env` file in the project root with the following variables:
+Create a `.env` file in the project root:
 
 ```env
-# Database connection
 DATABASE_URL="file:./prisma/dev.db"
-
-# JWT signing secret — use a strong random value in production
 JWT_SECRET="your-secret-key-change-in-production"
 ```
 
-> **Note:** Never commit the `.env` file to version control. The `.gitignore` already excludes it.
+> [!WARNING] Never commit `.env` to version control. It is already listed in `.gitignore`.
 
 ---
 
@@ -319,6 +340,40 @@ Running `npx tsx prisma/seed.ts` populates the database with:
 
 ---
 
+## Contributing
+
+Contributions are welcome. To get your PR merged without back-and-forth:
+
+1. **Fork** the repository.
+2. **Clone** your fork locally.
+3. **Create a branch** using Conventional Commits naming:
+   ```bash
+   git checkout -b feature/your-feature
+   # or
+   git checkout -b fix/your-fix
+   ```
+4. **Commit** using Conventional Commits format (`feat:`, `fix:`, `docs:`, etc.).
+5. **Run checks** before pushing:
+   ```bash
+   npm run lint
+   npm run build
+   ```
+6. **Open a PR** against `main`.
+
+> [!NOTE] Issues and feature requests are tracked via [GitHub Issues](https://github.com/XynoxTheDev/CU-Qollabb-MCA/issues).
+
+---
+
+## License
+
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for the full text.
+
+```
+SPDX-License-Identifier: MIT
+```
+
+---
+
 ## Development Roadmap
 
 | Phase | Status | Scope |
@@ -333,6 +388,8 @@ Running `npx tsx prisma/seed.ts` populates the database with:
 
 <div align="center">
 
-Built with Next.js · Tailwind CSS · Prisma · SQLite
+**Built with Next.js · Tailwind CSS · Prisma · SQLite**
+
+A portfolio project for the MCA program at [Chandigarh University](https://www.cuchd.in/).
 
 </div>
