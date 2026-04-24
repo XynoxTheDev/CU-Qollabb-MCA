@@ -1,20 +1,13 @@
 # Shopiverse
 
-A production-ready full-stack e-commerce platform for developers who want to learn by building. Covers the complete shopping lifecycle — product catalog, cart, checkout, orders, and an admin dashboard — with a REST API, JWT auth, and SQLite via Prisma.
+**A full-stack e-commerce reference app built with Next.js 16, Prisma, and Stripe.**
 
-> A Next.js e-commerce template built for learning and portfolio projects.
+Shopiverse covers the complete shopping lifecycle — product catalog, cart, Stripe-powered checkout, order management, and an admin dashboard. It is built for developers who want a well-structured, production-patterned Next.js App Router codebase they can run locally, learn from, and extend.
 
 <div align="center">
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
-[![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)](https://typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38bdf8?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
-[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-latest-black?style=for-the-badge)](https://ui.shadcn.com)
-[![Prisma](https://img.shields.io/badge/Prisma-5-2d3748?style=for-the-badge&logo=prisma)](https://prisma.io)
-[![SQLite](https://img.shields.io/badge/SQLite-003b57?style=for-the-badge&logo=sqlite)](https://sqlite.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
 [![MIT License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-[![Open Issues](https://img.shields.io/github/issues/XynoxTheDev/CU-Qollabb-MCA?style=for-the-badge)](https://github.com/XynoxTheDev/CU-Qollabb-MCA/issues)
 [![Last Commit](https://img.shields.io/github/last-commit/XynoxTheDev/CU-Qollabb-MCA?style=for-the-badge)](https://github.com/XynoxTheDev/CU-Qollabb-MCA/commits/main)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-green?style=for-the-badge)](https://github.com/XynoxTheDev/CU-Qollabb-MCA/pulls)
 
@@ -42,18 +35,18 @@ A production-ready full-stack e-commerce platform for developers who want to lea
 
 ## Overview
 
-Shopiverse is a complete e-commerce platform covering product discovery, cart management, checkout, order tracking, and an admin dashboard. It uses a server-side API architecture with App Router, JWT authentication, a relational database via Prisma ORM, and a component-driven frontend with shadcn/ui. Developers looking for a well-structured Next.js portfolio project or a real-world e-commerce reference implementation will find it most useful.
+Shopiverse is a full-stack e-commerce application built on the Next.js App Router. It provides a server-side REST API, JWT-based authentication, a relational SQLite database through Prisma ORM, and Stripe-powered checkout — all wired together in a single Next.js project. The architecture separates server concerns (API routes, auth middleware, ORM) from client concerns (React context, shadcn/ui component library), making it a practical reference for how these pieces fit together. Developers who want a real-world App Router codebase — complete with auth, payments, and an admin panel — will find the most value here.
 
 ### Core Capabilities
 
 | Capability | Description |
 |---|---|
-| Product Catalog | Browse 20+ products across 4 categories with filtering and search |
-| Shopping Cart | Add, remove, and adjust quantities with persistent state |
-| Checkout | Complete orders with shipping details and payment selection |
+| Product Catalog | Browse 20+ products across 4 categories with filtering by category, keyword, price range, and sort order |
+| Shopping Cart | Add, remove, and adjust quantities with client-side persistent state |
+| Checkout | Stripe-powered embedded checkout with shipping address collection and order persistence |
 | Authentication | JWT-based registration and login with bcrypt password hashing |
-| Admin Dashboard | Full CRUD for products and orders with status management |
-| REST API | Authenticated backend API for all core resources |
+| Admin Dashboard | Revenue summary, order management with status updates, and product CRUD |
+| REST API | Full backend API for all core resources with JWT auth enforcement |
 
 ---
 
@@ -61,17 +54,18 @@ Shopiverse is a complete e-commerce platform covering product discovery, cart ma
 
 | Category | Technology | Version |
 |---|---|---|
-| Framework | Next.js (App Router) | 16.2 |
+| Framework | Next.js (App Router) | 16.2.2 |
 | Language | TypeScript | 5 |
-| UI Framework | React | 19 |
+| UI Framework | React | 19.2.4 |
 | Styling | Tailwind CSS | 4 |
-| UI Components | shadcn/ui | Latest |
+| UI Components | shadcn/ui | 4.1.2 |
 | Database | SQLite | — |
-| ORM | Prisma | 5 |
-| Authentication | JWT via jose | 6 |
-| Password Hashing | bcryptjs | 3 |
-| Icons | Lucide React | Latest |
-| Notifications | Sonner | Latest |
+| ORM | Prisma | 5.22.0 |
+| Authentication | JWT via jose | 6.2.2 |
+| Password Hashing | bcryptjs | 3.0.3 |
+| Payments | Stripe | 22.1.0 |
+| Icons | Lucide React | 1.7.0 |
+| Notifications | Sonner | 2.0.7 |
 
 ---
 
@@ -85,7 +79,7 @@ Shopiverse is a complete e-commerce platform covering product discovery, cart ma
 | Product Listing | Grid layout with category filters, price range, and keyword search |
 | Product Detail | Image gallery, product info, ratings, quantity selector, and add-to-cart |
 | Shopping Cart | Line items with quantity adjustment, removal, and live order summary |
-| Checkout | Shipping address form, payment method selection, and order confirmation |
+| Checkout | Stripe embedded checkout with shipping address and payment confirmation |
 | User Accounts | Registration and login with secure JWT sessions |
 
 ### Admin Panel
@@ -100,9 +94,10 @@ Shopiverse is a complete e-commerce platform covering product discovery, cart ma
 
 | Feature | Description |
 |---|---|
-| REST API | Full CRUD operations for products and orders |
+| REST API | Full CRUD for products and orders |
 | JWT Authentication | Token-based auth with 7-day expiry |
 | Password Security | Passwords stored as bcrypt hashes |
+| Stripe Payments | Payment intent creation with stock validation and order persistence |
 | Relational Database | SQLite managed through Prisma ORM with migrations |
 
 ---
@@ -114,27 +109,27 @@ shopiverse/
 ├── prisma/
 │   ├── schema.prisma          # Database schema (User, Product, Order, OrderItem)
 │   ├── seed.ts                # Seed script for demo data
-│   ├── dev.db                 # SQLite database file
 │   └── migrations/            # Prisma migration history
 │
 ├── src/
 │   ├── app/                   # Next.js App Router
-│   │   ├── api/               # API route handlers
+│   │   ├── api/
 │   │   │   ├── auth/
 │   │   │   │   ├── login/     # POST /api/auth/login
 │   │   │   │   └── register/  # POST /api/auth/register
-│   │   │   ├── products/      # GET, POST /api/products
+│   │   │   ├── products/      # GET /api/products
 │   │   │   │   └── [id]/      # GET /api/products/[id]
-│   │   │   └── orders/        # GET, POST /api/orders
-│   │   │       └── [id]/      # GET, PUT /api/orders/[id]
-│   │   ├── layout.tsx         # Root layout
+│   │   │   ├── orders/        # GET, POST /api/orders
+│   │   │   │   └── [id]/      # GET, PUT /api/orders/[id]
+│   │   │   └── payment/       # POST /api/payment (Stripe)
+│   │   ├── layout.tsx
 │   │   ├── page.tsx           # Home page
-│   │   ├── products/          # Product listing and detail pages
-│   │   ├── cart/              # Shopping cart page
-│   │   ├── checkout/          # Checkout page
-│   │   ├── login/             # Login page
-│   │   ├── register/          # Registration page
-│   │   └── admin/             # Admin dashboard, products, orders
+│   │   ├── products/
+│   │   ├── cart/
+│   │   ├── checkout/
+│   │   ├── login/
+│   │   ├── register/
+│   │   └── admin/             # Dashboard, products, orders
 │   │
 │   ├── components/
 │   │   ├── ui/                # shadcn/ui primitive components
@@ -152,6 +147,7 @@ shopiverse/
 │       ├── db.ts              # Prisma client instance
 │       ├── auth.ts            # JWT sign and verify utilities
 │       ├── authMiddleware.ts  # Route-level auth enforcement
+│       ├── stripe.ts          # Stripe client and payment intent helpers
 │       ├── types.ts           # Shared TypeScript types
 │       └── utils.ts           # General utility functions
 │
@@ -189,9 +185,15 @@ shopiverse/
 | GET | `/api/orders/[id]` | Retrieve a specific order by ID | Yes |
 | PUT | `/api/orders/[id]` | Update order status | Admin only |
 
+### Payment
+
+| Method | Endpoint | Description | Auth Required |
+|---|---|---|---|
+| POST | `/api/payment` | Create a Stripe payment intent and persist the order | Yes |
+
 ### Authentication Header
 
-All protected endpoints require the following header:
+All protected endpoints require:
 
 ```http
 Authorization: Bearer <jwt_token>
@@ -219,7 +221,7 @@ Authorization: Bearer <jwt_token>
 | `/products` | Full product catalog with filtering and search |
 | `/products/[id]` | Product detail with image gallery and add-to-cart |
 | `/cart` | Shopping cart with quantity management and order summary |
-| `/checkout` | Checkout form with shipping and payment input |
+| `/checkout` | Stripe embedded checkout with shipping and payment |
 | `/login` | User login |
 | `/register` | New user registration |
 
@@ -245,12 +247,14 @@ npx prisma generate && npx prisma migrate dev && npx tsx prisma/seed.ts
 npm run dev
 ```
 
-> [!NOTE] After running `npm run dev`, open [http://localhost:3000](http://localhost:3000) in your browser. The page is up when the Shopiverse navbar and hero banner are visible.
+> [!NOTE]
+> Before starting, create a `.env` file in the project root — see [Environment Variables](#environment-variables). Then open [http://localhost:3000](http://localhost:3000). The app is running when the Shopiverse navbar and hero banner are visible.
 
 ### Prerequisites
 
 - Node.js 18.x or later
 - npm 9.x or later
+- A Stripe account (free) for payment functionality — test keys are sufficient
 
 ### Installation
 
@@ -267,7 +271,7 @@ npm run dev
    npm install
    ```
 
-3. Configure environment variables — see [Environment Variables](#environment-variables).
+3. Create a `.env` file in the project root — see [Environment Variables](#environment-variables).
 
 4. Set up the database:
 
@@ -283,9 +287,10 @@ npm run dev
    npm run dev
    ```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+6. Open [http://localhost:3000](http://localhost:3000).
 
-> [!NOTE] The Shopiverse navbar and hero banner indicate the dev server is running correctly.
+> [!NOTE]
+> Admin routes require a user with `role: "admin"`. The seed script creates an admin account automatically — see [Demo Accounts](#demo-accounts).
 
 ### Production Build
 
@@ -303,9 +308,15 @@ Create a `.env` file in the project root:
 ```env
 DATABASE_URL="file:./prisma/dev.db"
 JWT_SECRET="your-secret-key-change-in-production"
+STRIPE_SECRET_KEY="sk_test_..."
+STRIPE_PUBLISHABLE_KEY="pk_test_..."
 ```
 
-> [!WARNING] Never commit `.env` to version control. It is already listed in `.gitignore`.
+> [!WARNING]
+> Never commit `.env` to version control. It is already listed in `.gitignore`.
+
+> [!NOTE]
+> Stripe keys are optional for local development — all features except checkout will work without them. Get free test keys from the [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys).
 
 ---
 
@@ -315,17 +326,18 @@ JWT_SECRET="your-secret-key-change-in-production"
 
 | Model | Key Fields |
 |---|---|
-| `User` | `id`, `email`, `name`, `password` (hashed), `role`, `avatar`, `createdAt` |
+| `User` | `id`, `email`, `name`, `password` (bcrypt hash), `role` (default: `customer`), `avatar`, `createdAt` |
 | `Product` | `id`, `name`, `description`, `price`, `originalPrice`, `image`, `images`, `category`, `rating`, `reviewCount`, `stock` |
-| `Order` | `id`, `userId`, `total`, `status`, `shippingAddress`, `paymentMethod`, `createdAt` |
-| `OrderItem` | `id`, `orderId`, `productId`, `quantity`, `price` (cascade delete on order) |
+| `Order` | `id`, `userId`, `total`, `status` (default: `pending`), `shippingAddress`, `paymentMethod`, `createdAt` |
+| `OrderItem` | `id`, `orderId`, `productId`, `quantity`, `price` — cascade deletes with parent order |
 
 ### Seed Data
 
-Running `npx tsx prisma/seed.ts` populates the database with:
+```bash
+npx tsx prisma/seed.ts
+```
 
-- 2 user accounts (one customer, one admin)
-- 20 products spread across 4 categories
+Populates the database with 2 demo accounts and 20 products across 4 categories.
 
 ---
 
@@ -336,7 +348,8 @@ Running `npx tsx prisma/seed.ts` populates the database with:
 | Customer | `john@example.com` | `password123` |
 | Admin | `admin@example.com` | `admin123` |
 
-> These credentials are for local development and demonstration only.
+> [!WARNING]
+> These credentials are for local development only. Change all secrets before any public deployment.
 
 ---
 
@@ -344,29 +357,29 @@ Running `npx tsx prisma/seed.ts` populates the database with:
 
 Contributions are welcome. To get your PR merged without back-and-forth:
 
-1. **Fork** the repository.
-2. **Clone** your fork locally.
-3. **Create a branch** using Conventional Commits naming:
+1. **Fork** the repository and clone your fork locally.
+2. **Create a branch** using Conventional Commits naming:
    ```bash
    git checkout -b feature/your-feature
    # or
    git checkout -b fix/your-fix
    ```
-4. **Commit** using Conventional Commits format (`feat:`, `fix:`, `docs:`, etc.).
-5. **Run checks** before pushing:
+3. **Commit** using Conventional Commits format (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`, etc.).
+4. **Run checks** before pushing:
    ```bash
    npm run lint
    npm run build
    ```
-6. **Open a PR** against `main`.
+5. **Open a PR** against `main` with a clear description of what changed and why.
 
-> [!NOTE] Issues and feature requests are tracked via [GitHub Issues](https://github.com/XynoxTheDev/CU-Qollabb-MCA/issues).
+> [!NOTE]
+> Issues and feature requests are tracked via [GitHub Issues](https://github.com/XynoxTheDev/CU-Qollabb-MCA/issues).
 
 ---
 
 ## License
 
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for the full text.
+Licensed under the **MIT License** — see [LICENSE](LICENSE) for the full text.
 
 ```
 SPDX-License-Identifier: MIT
@@ -380,7 +393,7 @@ SPDX-License-Identifier: MIT
 |---|---|---|
 | Phase 1 — Frontend | Completed | All pages, components, and styling |
 | Phase 2 — Backend | Completed | REST API, SQLite/Prisma, JWT authentication |
-| Phase 3 — Payments | Planned | Stripe or PayPal integration |
+| Phase 3 — Payments | Completed | Stripe embedded checkout and payment intent API |
 | Phase 4 — Advanced Features | Planned | User profiles, product reviews, order tracking |
 | Phase 5 — Testing and Deployment | Planned | Unit/integration tests, CI/CD pipeline, production hosting |
 
@@ -388,7 +401,7 @@ SPDX-License-Identifier: MIT
 
 <div align="center">
 
-**Built with Next.js · Tailwind CSS · Prisma · SQLite**
+Built with [Next.js](https://nextjs.org) · [Tailwind CSS](https://tailwindcss.com) · [Prisma](https://prisma.io) · [Stripe](https://stripe.com)
 
 A portfolio project for the MCA program at [Chandigarh University](https://www.cuchd.in/).
 
