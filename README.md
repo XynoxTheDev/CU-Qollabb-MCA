@@ -397,8 +397,8 @@ SPDX-License-Identifier: MIT
 | Phase 1 — Frontend | Completed | All pages, components, and styling |
 | Phase 2 — Backend | Completed | REST API, SQLite/Prisma, JWT authentication |
 | Phase 3 — Payments | Completed | Stripe embedded checkout and payment intent API |
-| Phase 4 — Advanced Features | Planned | User profiles, product reviews, order tracking |
-| Phase 5 — Testing and Deployment | Planned | Unit/integration tests, CI/CD pipeline, production hosting |
+| Phase 4 — Testing & Deployment | Planned | Unit/integration tests, CI/CD pipeline, production hosting |
+| Phase 5 — Performance & Polish | Planned | Lighthouse audits, bundle optimization, accessibility improvements |
 
 ---
 
