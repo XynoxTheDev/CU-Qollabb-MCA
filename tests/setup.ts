@@ -1,6 +1,14 @@
 import '@testing-library/jest-dom/vitest'
 import { afterEach, vi } from 'vitest'
 import { cleanup } from '@testing-library/react'
+import { TextEncoder, TextDecoder } from 'node:util'
+
+if (!globalThis.TextEncoder || new globalThis.TextEncoder().encode('').constructor !== Uint8Array) {
+  Object.defineProperty(globalThis, 'TextEncoder', { value: TextEncoder, configurable: true })
+}
+if (!globalThis.TextDecoder) {
+  Object.defineProperty(globalThis, 'TextDecoder', { value: TextDecoder, configurable: true })
+}
 
 const localStorageMock = {
   getItem: vi.fn(),

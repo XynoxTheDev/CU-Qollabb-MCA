@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { testApiHandler } from 'next-test-api-route-handler'
 import * as paymentHandler from '@/app/api/payment/route'
@@ -61,7 +62,7 @@ describe('POST /api/payment', () => {
   })
 
   it('should return 400 if no items provided', async () => {
-    vi.spyOn(stripeModule, 'stripe', 'get').mockReturnValue({ paymentIntents: { create: vi.fn() } } as any)
+    vi.spyOn(stripeModule, 'stripe', 'get').mockReturnValue({ paymentIntents: { create: vi.fn() } } as unknown as typeof stripeModule.stripe)
     vi.mocked(authMiddleware.requireAuth).mockResolvedValue(mockUser)
 
     await testApiHandler({
@@ -84,7 +85,7 @@ describe('POST /api/payment', () => {
   })
 
   it('should return 400 if shipping address is missing', async () => {
-    vi.spyOn(stripeModule, 'stripe', 'get').mockReturnValue({ paymentIntents: { create: vi.fn() } } as any)
+    vi.spyOn(stripeModule, 'stripe', 'get').mockReturnValue({ paymentIntents: { create: vi.fn() } } as unknown as typeof stripeModule.stripe)
     vi.mocked(authMiddleware.requireAuth).mockResolvedValue(mockUser)
 
     await testApiHandler({
@@ -106,7 +107,7 @@ describe('POST /api/payment', () => {
   })
 
   it('should return 404 if product not found', async () => {
-    vi.spyOn(stripeModule, 'stripe', 'get').mockReturnValue({ paymentIntents: { create: vi.fn() } } as any)
+    vi.spyOn(stripeModule, 'stripe', 'get').mockReturnValue({ paymentIntents: { create: vi.fn() } } as unknown as typeof stripeModule.stripe)
     vi.mocked(authMiddleware.requireAuth).mockResolvedValue(mockUser)
     vi.mocked(prisma.product.findUnique).mockResolvedValue(null)
 
@@ -130,15 +131,38 @@ describe('POST /api/payment', () => {
   })
 
   it('should create payment intent on valid request', async () => {
-    vi.spyOn(stripeModule, 'stripe', 'get').mockReturnValue({ paymentIntents: { create: vi.fn() } } as any)
+    vi.spyOn(stripeModule, 'stripe', 'get').mockReturnValue({ paymentIntents: { create: vi.fn() } } as unknown as typeof stripeModule.stripe)
     vi.mocked(authMiddleware.requireAuth).mockResolvedValue(mockUser)
     vi.mocked(prisma.product.findUnique).mockResolvedValue({
       id: 'prod-1',
       name: 'Test Product',
+      description: 'A test product',
       price: 50,
+      originalPrice: null,
+      image: '/img.jpg',
+      images: null,
+      category: 'Test',
+      rating: 4.5,
+      reviewCount: 10,
       stock: 50,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
-    vi.mocked(prisma.product.update).mockResolvedValue({})
+    vi.mocked(prisma.product.update).mockResolvedValue({
+      id: 'prod-1',
+      name: 'Test Product',
+      description: 'A test product',
+      price: 50,
+      originalPrice: null,
+      image: '/img.jpg',
+      images: null,
+      category: 'Test',
+      rating: 4.5,
+      reviewCount: 10,
+      stock: 49,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
     vi.mocked(prisma.order.create).mockResolvedValue({
       id: 'order-1',
       userId: 'user-1',
@@ -151,7 +175,7 @@ describe('POST /api/payment', () => {
     })
     vi.mocked(stripeModule.createPaymentIntent).mockResolvedValue({
       client_secret: 'pi_secret_123',
-    })
+    } as unknown as Awaited<ReturnType<typeof stripeModule.createPaymentIntent>>)
 
     await testApiHandler({
       appHandler: paymentHandler,

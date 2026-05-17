@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { stripe, createPaymentIntent } from '@/lib/stripe';
-import { authMiddleware, requireAuth } from '@/lib/authMiddleware';
+import { requireAuth } from '@/lib/authMiddleware';
 import { prisma } from '@/lib/db';
 
 export async function POST(request: Request) {

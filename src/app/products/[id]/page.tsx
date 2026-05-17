@@ -9,7 +9,6 @@ import { getProductById, products } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
 import ProductCard from '@/components/products/ProductCard';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 

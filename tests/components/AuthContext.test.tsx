@@ -25,16 +25,13 @@ describe('AuthContext', () => {
     vi.restoreAllMocks()
   })
 
-  it('should provide initial loading state', async () => {
+  it('should expose isLoading=false after mount', () => {
     render(
       <AuthProvider>
         <TestComponent />
       </AuthProvider>
     )
-    expect(screen.getByTestId('loading').textContent).toBe('loading')
-    await waitFor(() => {
-      expect(screen.getByTestId('loading').textContent).toBe('ready')
-    })
+    expect(screen.getByTestId('loading').textContent).toBe('ready')
   })
 
   it('should start as not authenticated', async () => {

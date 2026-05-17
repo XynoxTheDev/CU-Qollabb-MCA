@@ -3,6 +3,16 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product, CartItem } from '@/lib/types';
 
+function readStoredCart(): CartItem[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const stored = window.localStorage.getItem('cart');
+    return stored ? (JSON.parse(stored) as CartItem[]) : [];
+  } catch {
+    return [];
+  }
+}
+
 interface CartContextType {
   items: CartItem[];
   addToCart: (product: Product, quantity?: number) => void;
@@ -16,14 +26,7 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
-
-  useEffect(() => {
-    const storedCart = localStorage.getItem('cart');
-    if (storedCart) {
-      setItems(JSON.parse(storedCart));
-    }
-  }, []);
+  const [items, setItems] = useState<CartItem[]>(readStoredCart);
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(items));

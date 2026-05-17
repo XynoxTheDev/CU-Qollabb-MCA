@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { testApiHandler } from 'next-test-api-route-handler'
 import * as loginHandler from '@/app/api/auth/login/route'
@@ -82,6 +83,9 @@ describe('POST /api/auth/login', () => {
       password: 'hashedpassword',
       name: 'Test User',
       role: 'customer',
+      avatar: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
     vi.mocked(authLib.verifyPassword).mockResolvedValue(false)
 
@@ -107,6 +111,9 @@ describe('POST /api/auth/login', () => {
       password: 'hashedpassword',
       name: 'Test User',
       role: 'customer',
+      avatar: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
     vi.mocked(authLib.verifyPassword).mockResolvedValue(true)
     vi.mocked(authLib.createToken).mockResolvedValue('mock-token')
@@ -172,6 +179,9 @@ describe('POST /api/auth/register', () => {
       password: 'hashedpassword',
       name: 'Existing User',
       role: 'customer',
+      avatar: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
 
     await testApiHandler({
@@ -197,6 +207,9 @@ describe('POST /api/auth/register', () => {
       email: 'new@example.com',
       password: 'hashedpassword',
       role: 'customer',
+      avatar: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
     vi.mocked(authLib.hashPassword).mockResolvedValue('hashedpassword')
     vi.mocked(authLib.createToken).mockResolvedValue('new-mock-token')

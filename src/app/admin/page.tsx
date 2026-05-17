@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { LayoutDashboard, Package, ShoppingCart, Users, Settings, TrendingUp, DollarSign, ShoppingBag, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingCart, Users, Settings, DollarSign, ShoppingBag, Menu } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { products, orders } from '@/lib/data';
 import { Button } from '@/components/ui/button';

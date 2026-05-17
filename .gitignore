@@ -43,3 +43,7 @@ next-env.d.ts
 # prisma
 prisma/*.db
 prisma/*.db-journal
+
+# audit / scanner output
+dependabot_alerts.json
+*.audit.json

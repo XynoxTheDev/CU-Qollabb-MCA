@@ -9,7 +9,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
 export default function CartPage() {
-  const { items, updateQuantity, removeFromCart, getCartTotal, clearCart } = useCart();
+  const { items, updateQuantity, removeFromCart, getCartTotal } = useCart();
 
   if (items.length === 0) {
     return (
@@ -20,7 +20,7 @@ export default function CartPage() {
               <ShoppingBag className="h-12 w-12 text-slate-400" />
             </div>
             <h1 className="text-2xl font-bold text-slate-900 mb-2">Your cart is empty</h1>
-            <p className="text-slate-500 mb-6">Looks like you haven't added any items to your cart yet.</p>
+            <p className="text-slate-500 mb-6">Looks like you haven&apos;t added any items to your cart yet.</p>
             <Link href="/products">
               <Button size="lg">
                 Start Shopping

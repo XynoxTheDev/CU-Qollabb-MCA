@@ -17,7 +17,14 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useAuth } from '@/context/AuthContext';
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+let stripePromiseSingleton: ReturnType<typeof loadStripe> | null = null;
+function getStripePromise() {
+  if (typeof window === 'undefined') return null;
+  if (!stripePromiseSingleton) {
+    stripePromiseSingleton = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
+  }
+  return stripePromiseSingleton;
+}
 
 function PaymentForm({ onSuccess }: { onSuccess: () => void }) {
   const stripe = useStripe();
@@ -67,6 +74,7 @@ function CheckoutContent() {
   const [orderComplete, setOrderComplete] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [orderId, setOrderId] = useState<string>('');
+  const [fallbackOrderId] = useState<string>(() => 'ORD-' + Date.now().toString().slice(-6));
   
   const [shippingInfo, setShippingInfo] = useState({
     fullName: user?.name || '',
@@ -99,7 +107,7 @@ function CheckoutContent() {
               Thank you for your purchase. You will receive an email confirmation shortly.
             </p>
             <div className="bg-slate-50 p-4 rounded-lg mb-6">
-              <p className="text-sm text-slate-600">Order ID: <span className="font-mono font-medium">{orderId || 'ORD-' + Date.now().toString().slice(-6)}</span></p>
+              <p className="text-sm text-slate-600">Order ID: <span className="font-mono font-medium">{orderId || fallbackOrderId}</span></p>
             </div>
             <Link href="/products">
               <Button>Continue Shopping</Button>
@@ -218,7 +226,7 @@ function CheckoutContent() {
 
                 {paymentMethod === 'credit-card' && (
                   clientSecret ? (
-                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                    <Elements stripe={getStripePromise()} options={{ clientSecret }}>
                       <PaymentForm onSuccess={handleOrderSuccess} />
                     </Elements>
                   ) : (

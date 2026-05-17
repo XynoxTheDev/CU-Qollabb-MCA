@@ -3,14 +3,13 @@
 import { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Package, Search, Eye, ChevronDown, ChevronUp, Menu, Settings } from 'lucide-react';
+import { Package, Search, ChevronDown, ChevronUp, Menu, Settings } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { orders as initialOrders } from '@/lib/data';
 import { Order } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import {
   Table,
   TableBody,

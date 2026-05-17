@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { testApiHandler } from 'next-test-api-route-handler'
 import * as productsHandler from '@/app/api/products/route'
@@ -21,6 +22,7 @@ const mockProducts = [
     price: 99.99,
     originalPrice: 129.99,
     image: '/image1.jpg',
+    images: null,
     category: 'Electronics',
     rating: 4.5,
     reviewCount: 100,
@@ -33,7 +35,9 @@ const mockProducts = [
     name: 'Product 2',
     description: 'Description 2',
     price: 49.99,
+    originalPrice: null,
     image: '/image2.jpg',
+    images: null,
     category: 'Clothing',
     rating: 4.0,
     reviewCount: 50,
@@ -68,11 +72,9 @@ describe('GET /api/products', () => {
 
     await testApiHandler({
       appHandler: productsHandler,
+      url: '/api/products?category=Electronics',
       test: async ({ fetch }) => {
-        const res = await fetch({
-          method: 'GET',
-          query: { category: 'Electronics' },
-        })
+        const res = await fetch({ method: 'GET' })
         expect(res.status).toBe(200)
         const json = await res.json()
         expect(json).toHaveLength(1)
@@ -86,11 +88,9 @@ describe('GET /api/products', () => {
 
     await testApiHandler({
       appHandler: productsHandler,
+      url: '/api/products?search=Product+1',
       test: async ({ fetch }) => {
-        const res = await fetch({
-          method: 'GET',
-          query: { search: 'Product 1' },
-        })
+        const res = await fetch({ method: 'GET' })
         expect(res.status).toBe(200)
         const json = await res.json()
         expect(json).toHaveLength(1)
@@ -103,11 +103,9 @@ describe('GET /api/products', () => {
 
     await testApiHandler({
       appHandler: productsHandler,
+      url: '/api/products?minPrice=0&maxPrice=50',
       test: async ({ fetch }) => {
-        const res = await fetch({
-          method: 'GET',
-          query: { minPrice: '0', maxPrice: '50' },
-        })
+        const res = await fetch({ method: 'GET' })
         expect(res.status).toBe(200)
         const json = await res.json()
         expect(json).toHaveLength(1)
@@ -120,13 +118,10 @@ describe('GET /api/products', () => {
 
     await testApiHandler({
       appHandler: productsHandler,
+      url: '/api/products?sort=price&order=asc',
       test: async ({ fetch }) => {
-        const res = await fetch({
-          method: 'GET',
-          query: { sort: 'price', order: 'asc' },
-        })
+        const res = await fetch({ method: 'GET' })
         expect(res.status).toBe(200)
-        const json = await res.json()
         expect(prisma.product.findMany).toHaveBeenCalledWith(
           expect.objectContaining({
             orderBy: expect.objectContaining({
@@ -143,13 +138,10 @@ describe('GET /api/products', () => {
 
     await testApiHandler({
       appHandler: productsHandler,
+      url: '/api/products?sort=rating&order=desc',
       test: async ({ fetch }) => {
-        const res = await fetch({
-          method: 'GET',
-          query: { sort: 'rating', order: 'desc' },
-        })
+        const res = await fetch({ method: 'GET' })
         expect(res.status).toBe(200)
-        const json = await res.json()
         expect(prisma.product.findMany).toHaveBeenCalledWith(
           expect.objectContaining({
             orderBy: expect.objectContaining({
@@ -186,8 +178,9 @@ describe('GET /api/products/[id]', () => {
 
     await testApiHandler({
       appHandler: productByIdHandler,
+      params: { id: 'prod-1' },
       test: async ({ fetch }) => {
-        const res = await fetch({ method: 'GET', url: '/api/products/prod-1' })
+        const res = await fetch({ method: 'GET' })
         expect(res.status).toBe(200)
         const json = await res.json()
         expect(json.id).toBe('prod-1')
@@ -201,8 +194,9 @@ describe('GET /api/products/[id]', () => {
 
     await testApiHandler({
       appHandler: productByIdHandler,
+      params: { id: 'nonexistent' },
       test: async ({ fetch }) => {
-        const res = await fetch({ method: 'GET', url: '/api/products/nonexistent' })
+        const res = await fetch({ method: 'GET' })
         expect(res.status).toBe(404)
       },
     })

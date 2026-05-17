@@ -9,7 +9,7 @@ import { useAuth } from '@/context/AuthContext';
 import { products as initialProducts, categories } from '@/lib/data';
 import { Product } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import {

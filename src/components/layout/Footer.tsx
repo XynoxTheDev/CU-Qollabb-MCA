@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Send, Truck, RotateCcw, Shield } from 'lucide-react';
+import { Send, Truck, RotateCcw, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const FacebookIcon = () => (

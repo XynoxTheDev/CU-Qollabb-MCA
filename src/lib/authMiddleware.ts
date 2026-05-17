@@ -1,5 +1,3 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
 import { verifyToken, AuthUser } from '@/lib/auth';
 
 export interface AuthRequest extends Request {

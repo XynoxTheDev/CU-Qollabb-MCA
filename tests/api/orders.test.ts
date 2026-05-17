@@ -1,3 +1,4 @@
+// @vitest-environment node
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { testApiHandler } from 'next-test-api-route-handler'
 import * as ordersHandler from '@/app/api/orders/route'
@@ -153,10 +154,33 @@ describe('POST /api/orders', () => {
     vi.mocked(prisma.product.findUnique).mockResolvedValue({
       id: 'prod-1',
       name: 'Test Product',
+      description: 'A test product',
       price: 99.99,
+      originalPrice: null,
+      image: '/img.jpg',
+      images: null,
+      category: 'Test',
+      rating: 4.5,
+      reviewCount: 10,
       stock: 50,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
-    vi.mocked(prisma.product.update).mockResolvedValue({})
+    vi.mocked(prisma.product.update).mockResolvedValue({
+      id: 'prod-1',
+      name: 'Test Product',
+      description: 'A test product',
+      price: 99.99,
+      originalPrice: null,
+      image: '/img.jpg',
+      images: null,
+      category: 'Test',
+      rating: 4.5,
+      reviewCount: 10,
+      stock: 48,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
     vi.mocked(prisma.order.create).mockResolvedValue({
       id: 'order-1',
       userId: 'user-1',
@@ -164,7 +188,6 @@ describe('POST /api/orders', () => {
       status: 'pending',
       shippingAddress: '{}',
       paymentMethod: 'card',
-      items: [],
       createdAt: new Date(),
       updatedAt: new Date(),
     })

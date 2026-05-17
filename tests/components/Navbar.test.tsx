@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Navbar from '@/components/layout/Navbar'
 import * as authModule from '@/context/AuthContext'
@@ -70,7 +70,7 @@ describe('Navbar', () => {
     })
 
     render(<Navbar />)
-    expect(screen.getByText('Admin')).toBeDefined()
+    expect(screen.getAllByText('Admin').length).toBeGreaterThan(0)
   })
 
   it('should call logout when logout button is clicked', async () => {
@@ -87,7 +87,12 @@ describe('Navbar', () => {
     const user = userEvent.setup()
     render(<Navbar />)
     const logoutButtons = screen.getAllByRole('button', { name: '' })
-    const logoutButton = logoutButtons.find(b => b.querySelector('svg')?.className?.includes('log-out'))
+    const logoutButton = logoutButtons.find(b => {
+      const svg = b.querySelector('svg')
+      const cls = svg?.getAttribute('class') ?? ''
+      return cls.includes('lucide-log-out')
+    })
+    expect(logoutButton).toBeDefined()
     if (logoutButton) {
       await user.click(logoutButton)
       expect(logoutMock).toHaveBeenCalled()

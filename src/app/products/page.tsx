@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, useState, useMemo } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { products, categories } from '@/lib/data';
 import ProductCard from '@/components/products/ProductCard';
@@ -14,10 +14,66 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 
+interface FilterContentProps {
+  selectedCategories: string[];
+  toggleCategory: (category: string) => void;
+  priceRange: number[];
+  setPriceRange: (range: [number, number]) => void;
+  clearFilters: () => void;
+}
+
+function FilterContent({
+  selectedCategories,
+  toggleCategory,
+  priceRange,
+  setPriceRange,
+  clearFilters,
+}: FilterContentProps) {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h3 className="font-semibold mb-4">Categories</h3>
+        <div className="space-y-3">
+          {categories.map(category => (
+            <div key={category.id} className="flex items-center gap-2">
+              <Checkbox
+                id={category.id}
+                checked={selectedCategories.includes(category.name)}
+                onCheckedChange={() => toggleCategory(category.name)}
+              />
+              <Label htmlFor={category.id} className="cursor-pointer text-sm">
+                {category.name} ({category.productCount})
+              </Label>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="font-semibold mb-4">Price Range</h3>
+        <Slider
+          value={priceRange}
+          onValueChange={(value) => setPriceRange(value as [number, number])}
+          max={500}
+          step={10}
+          className="mb-3"
+        />
+        <div className="flex justify-between text-sm text-slate-500">
+          <span>${priceRange[0]}</span>
+          <span>${priceRange[1]}</span>
+        </div>
+      </div>
+
+      <Button variant="outline" className="w-full" onClick={clearFilters}>
+        Clear Filters
+      </Button>
+    </div>
+  );
+}
+
 function ProductsContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
-  
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     searchParams.get('category') ? [searchParams.get('category')!] : []
@@ -81,46 +137,13 @@ function ProductsContent() {
 
   const activeFiltersCount = selectedCategories.length + (priceRange[0] > 0 || priceRange[1] < 500 ? 1 : 0);
 
-  const FilterContent = () => (
-    <div className="space-y-6">
-      <div>
-        <h3 className="font-semibold mb-4">Categories</h3>
-        <div className="space-y-3">
-          {categories.map(category => (
-            <div key={category.id} className="flex items-center gap-2">
-              <Checkbox 
-                id={category.id}
-                checked={selectedCategories.includes(category.name)}
-                onCheckedChange={() => toggleCategory(category.name)}
-              />
-              <Label htmlFor={category.id} className="cursor-pointer text-sm">
-                {category.name} ({category.productCount})
-              </Label>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h3 className="font-semibold mb-4">Price Range</h3>
-        <Slider 
-          value={priceRange} 
-          onValueChange={(value) => setPriceRange(value as [number, number])}
-          max={500}
-          step={10}
-          className="mb-3"
-        />
-        <div className="flex justify-between text-sm text-slate-500">
-          <span>${priceRange[0]}</span>
-          <span>${priceRange[1]}</span>
-        </div>
-      </div>
-
-      <Button variant="outline" className="w-full" onClick={clearFilters}>
-        Clear Filters
-      </Button>
-    </div>
-  );
+  const filterProps: FilterContentProps = {
+    selectedCategories,
+    toggleCategory,
+    priceRange,
+    setPriceRange,
+    clearFilters,
+  };
 
   return (
     <div className="min-h-screen py-8">
@@ -138,7 +161,7 @@ function ProductsContent() {
                 <SlidersHorizontal className="h-5 w-5" />
                 Filters
               </h2>
-              <FilterContent />
+              <FilterContent {...filterProps} />
             </div>
           </aside>
 
@@ -175,7 +198,7 @@ function ProductsContent() {
                 </Button>
                 <SheetContent side="left">
                   <SheetTitle className="mb-6">Filters</SheetTitle>
-                  <FilterContent />
+                  <FilterContent {...filterProps} />
                 </SheetContent>
               </Sheet>
 
