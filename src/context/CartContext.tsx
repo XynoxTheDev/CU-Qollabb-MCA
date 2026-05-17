@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Product, CartItem } from '@/lib/types';
+import { Product, CartItem } from '@/lib/shared/types';
 
 function readStoredCart(): CartItem[] {
   if (typeof window === 'undefined') return [];

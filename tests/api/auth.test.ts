@@ -3,10 +3,10 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { testApiHandler } from 'next-test-api-route-handler'
 import * as loginHandler from '@/app/api/auth/login/route'
 import * as registerHandler from '@/app/api/auth/register/route'
-import * as authLib from '@/lib/auth'
-import { prisma } from '@/lib/db'
+import * as authLib from '@/lib/server/auth'
+import { prisma } from '@/lib/server/db'
 
-vi.mock('@/lib/db', () => ({
+vi.mock('@/lib/server/db', () => ({
   prisma: {
     user: {
       findUnique: vi.fn(),
@@ -15,7 +15,7 @@ vi.mock('@/lib/db', () => ({
   },
 }))
 
-vi.mock('@/lib/auth', () => ({
+vi.mock('@/lib/server/auth', () => ({
   verifyPassword: vi.fn(),
   hashPassword: vi.fn(),
   createToken: vi.fn(),

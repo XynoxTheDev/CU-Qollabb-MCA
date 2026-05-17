@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { stripe, createPaymentIntent } from '@/lib/stripe';
-import { requireAuth } from '@/lib/authMiddleware';
-import { prisma } from '@/lib/db';
+import { stripe, createPaymentIntent } from '@/lib/server/stripe';
+import { requireAuth } from '@/lib/server/auth-middleware';
+import { prisma } from '@/lib/server/db';
 
 export async function POST(request: Request) {
   if (!stripe) {

@@ -2,11 +2,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { testApiHandler } from 'next-test-api-route-handler'
 import * as paymentHandler from '@/app/api/payment/route'
-import { prisma } from '@/lib/db'
-import * as authMiddleware from '@/lib/authMiddleware'
-import * as stripeModule from '@/lib/stripe'
+import { prisma } from '@/lib/server/db'
+import * as authMiddleware from '@/lib/server/auth-middleware'
+import * as stripeModule from '@/lib/server/stripe'
 
-vi.mock('@/lib/db', () => ({
+vi.mock('@/lib/server/db', () => ({
   prisma: {
     order: {
       create: vi.fn(),
@@ -18,12 +18,12 @@ vi.mock('@/lib/db', () => ({
   },
 }))
 
-vi.mock('@/lib/authMiddleware', () => ({
+vi.mock('@/lib/server/auth-middleware', () => ({
   authMiddleware: vi.fn(),
   requireAuth: vi.fn(),
 }))
 
-vi.mock('@/lib/stripe', () => ({
+vi.mock('@/lib/server/stripe', () => ({
   stripe: {
     paymentIntents: {
       create: vi.fn(),

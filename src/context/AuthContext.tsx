@@ -1,8 +1,8 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { UserWithoutPassword } from '@/lib/types';
-import { users } from '@/lib/data';
+import { UserWithoutPassword } from '@/lib/shared/types';
+import { users } from '@/lib/data/mock-data';
 
 interface AuthContextType {
   user: UserWithoutPassword | null;

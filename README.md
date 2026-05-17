@@ -29,25 +29,28 @@ Shopiverse covers the complete shopping lifecycle — product catalog, cart, Str
 7. [Getting Started](#getting-started)
 8. [Environment Variables](#environment-variables)
 9. [Database](#database)
-10. [Demo Accounts](#demo-accounts)
-11. [Contributing](#contributing)
-12. [License](#license)
+10. [Scripts](#scripts)
+11. [Testing](#testing)
+12. [Continuous Integration](#continuous-integration)
+13. [Demo Accounts](#demo-accounts)
+14. [Contributing](#contributing)
+15. [License](#license)
 
 ---
 
 ## Overview
 
-Shopiverse is a full-stack e-commerce application built on the Next.js App Router. It provides a server-side REST API, JWT-based authentication, a relational SQLite database through Prisma ORM, and Stripe-powered checkout — all wired together in a single Next.js project. The architecture separates server concerns (API routes, auth middleware, ORM) from client concerns (React context, shadcn/ui component library), making it a practical reference for how these pieces fit together. Developers who want a real-world App Router codebase — complete with auth, payments, and an admin panel — will find the most value here.
+Shopiverse is a full-stack e-commerce application built on the Next.js App Router. It provides a server-side REST API, JWT-based authentication, a relational SQLite database through Prisma ORM, and Stripe-powered checkout — all wired together in a single Next.js project. The codebase separates server concerns (API routes, auth, ORM) from shared and client concerns through an explicit `src/lib/{server,shared,data}` split, making it a practical reference for how these pieces fit together.
 
 ### Core Capabilities
 
 | Capability | Description |
 |---|---|
-| Product Catalog | Browse 20+ products across 4 categories with filtering by category, keyword, price range, and sort order |
-| Shopping Cart | Add, remove, and adjust quantities with client-side persistent state |
-| Checkout | Stripe-powered embedded checkout with shipping address collection and order persistence |
+| Product Catalog | Browse 19 demo products across 4 categories with filtering by category, keyword, price range, and sort order |
+| Shopping Cart | Add, remove, and adjust quantities with `localStorage` persistence |
+| Checkout | Stripe-powered checkout with shipping address collection and order persistence |
 | Authentication | JWT-based registration and login with bcrypt password hashing |
-| Admin Dashboard | Revenue summary, order management with status updates, and product CRUD |
+| Admin Dashboard | Revenue summary, order management with status updates, and product add/delete |
 | REST API | Full backend API for all core resources with JWT auth enforcement |
 
 ---
@@ -60,16 +63,20 @@ Shopiverse is a full-stack e-commerce application built on the Next.js App Route
 | Language | TypeScript | 5 |
 | UI Framework | React | 19.2.4 |
 | Styling | Tailwind CSS | 4 |
-| UI Components | shadcn/ui | 4.1.2 |
+| UI Primitives | @base-ui/react | 1.3.0 |
+| Component CLI | shadcn | 4.1.2 |
 | Database | SQLite | — |
 | ORM | Prisma | 5.22.0 |
 | Authentication | JWT via jose | 6.2.2 |
 | Password Hashing | bcryptjs | 3.0.3 |
 | Payments | Stripe | 22.1.0 |
 | Icons | Lucide React | 1.7.0 |
-| Notifications | Sonner | 2.0.7 |
-| HTTP Runtime | hono | 4.12.15 |
-| Testing | vitest | 4.1.6 |
+| Toasts | Sonner | 2.0.7 |
+| Test Runner | Vitest | 4.1.6 |
+| DOM Testing | Testing Library | 16.3.2 |
+
+> [!NOTE]
+> `shadcn` is the CLI used to scaffold UI components. The components themselves live in `src/components/ui/` and are not a versioned dependency.
 
 ---
 
@@ -83,7 +90,7 @@ Shopiverse is a full-stack e-commerce application built on the Next.js App Route
 | Product Listing | Grid layout with category filters, price range, and keyword search |
 | Product Detail | Image gallery, product info, ratings, quantity selector, and add-to-cart |
 | Shopping Cart | Line items with quantity adjustment, removal, and live order summary |
-| Checkout | Stripe embedded checkout with shipping address and payment confirmation |
+| Checkout | Shipping address form, Stripe payment, and order confirmation |
 | User Accounts | Registration and login with secure JWT sessions |
 
 ### Admin Panel
@@ -98,7 +105,7 @@ Shopiverse is a full-stack e-commerce application built on the Next.js App Route
 
 | Feature | Description |
 |---|---|
-| REST API | Full CRUD for products and orders |
+| REST API | CRUD endpoints for products and orders |
 | JWT Authentication | Token-based auth with 7-day expiry |
 | Password Security | Passwords stored as bcrypt hashes |
 | Stripe Payments | Payment intent creation with stock validation and order persistence |
@@ -110,57 +117,71 @@ Shopiverse is a full-stack e-commerce application built on the Next.js App Route
 
 ```
 shopiverse/
+├── .github/
+│   └── workflows/
+│       └── ci.yml                       # Lint, typecheck, test, build, deploy
 ├── prisma/
-│   ├── schema.prisma          # Database schema (User, Product, Order, OrderItem)
-│   ├── seed.ts                # Seed script for demo data
-│   └── migrations/            # Prisma migration history
+│   ├── schema.prisma                    # User, Product, Order, OrderItem
+│   ├── seed.ts                          # Seed script for demo data
+│   └── migrations/                      # Prisma migration history
+│
+├── public/                              # Static assets
 │
 ├── src/
-│   ├── app/                   # Next.js App Router
+│   ├── app/                             # Next.js App Router
 │   │   ├── api/
-│   │   │   ├── auth/
-│   │   │   │   ├── login/     # POST /api/auth/login
-│   │   │   │   └── register/  # POST /api/auth/register
-│   │   │   ├── products/      # GET /api/products
-│   │   │   │   └── [id]/      # GET /api/products/[id]
-│   │   │   ├── orders/        # GET, POST /api/orders
-│   │   │   │   └── [id]/      # GET, PUT /api/orders/[id]
-│   │   │   └── payment/       # POST /api/payment (Stripe)
-│   │   ├── layout.tsx
-│   │   ├── page.tsx           # Home page
-│   │   ├── products/
-│   │   ├── cart/
-│   │   ├── checkout/
-│   │   ├── login/
-│   │   ├── register/
-│   │   └── admin/             # Dashboard, products, orders
+│   │   │   ├── auth/{login,register}/   # POST /api/auth/*
+│   │   │   ├── products/[id]?/          # GET /api/products(/[id])
+│   │   │   ├── orders/[id]?/            # GET, POST /api/orders, GET, PUT /api/orders/[id]
+│   │   │   └── payment/                 # POST /api/payment (Stripe)
+│   │   ├── admin/                       # /admin, /admin/products, /admin/orders
+│   │   ├── products/                    # /products, /products/[id]
+│   │   ├── cart/, checkout/, login/, register/
+│   │   ├── layout.tsx, page.tsx, globals.css
 │   │
 │   ├── components/
-│   │   ├── ui/                # shadcn/ui primitive components
-│   │   ├── layout/
-│   │   │   ├── Navbar.tsx
-│   │   │   └── Footer.tsx
-│   │   └── products/
-│   │       └── ProductCard.tsx
+│   │   ├── ui/                          # shadcn primitives (Button, Card, …)
+│   │   ├── layout/                      # Navbar, Footer
+│   │   └── products/                    # ProductCard
 │   │
 │   ├── context/
-│   │   ├── AuthContext.tsx    # Global auth state and actions
-│   │   └── CartContext.tsx    # Global cart state and actions
+│   │   ├── AuthContext.tsx              # Global auth state and actions
+│   │   └── CartContext.tsx              # Global cart state (localStorage backed)
 │   │
 │   └── lib/
-│       ├── db.ts              # Prisma client instance
-│       ├── auth.ts            # JWT sign and verify utilities
-│       ├── authMiddleware.ts  # Route-level auth enforcement
-│       ├── stripe.ts          # Stripe client and payment intent helpers
-│       ├── types.ts           # Shared TypeScript types
-│       └── utils.ts           # General utility functions
+│       ├── server/                      # Server-only modules
+│       │   ├── db.ts                    # Prisma client singleton
+│       │   ├── auth.ts                  # JWT sign/verify + bcrypt helpers
+│       │   ├── auth-middleware.ts       # requireAuth, requireAdmin
+│       │   └── stripe.ts                # Stripe client + payment intent helpers
+│       ├── shared/                      # Isomorphic modules (server + client)
+│       │   ├── types.ts                 # Shared TypeScript types
+│       │   └── utils.ts                 # cn() and general utilities
+│       └── data/
+│           └── mock-data.ts             # Client-side demo data (categories, products, orders)
 │
-├── .env                       # Environment variables (not committed)
-├── next.config.ts
-├── tailwind.config.ts
-├── tsconfig.json
+├── tests/
+│   ├── api/                             # Vitest API route tests
+│   ├── components/                      # React component tests
+│   ├── unit/                            # Unit tests (auth helpers, utils)
+│   └── setup.ts                         # Vitest setup (mocks next/navigation)
+│
+├── .env                                 # Local environment (not committed)
+├── components.json                      # shadcn CLI config
+├── eslint.config.mjs                    # Flat ESLint config
+├── next.config.ts                       # Image domains, headers, env mapping
+├── postcss.config.mjs                   # Tailwind v4 PostCSS plugin
+├── tsconfig.json                        # Path alias @/* -> ./src/*
+├── vitest.config.ts                     # Vitest + jsdom + @ alias
 └── package.json
 ```
+
+> [!NOTE]
+> `src/lib/` is split intentionally:
+>
+> - **`server/`** — modules that must only run on the server (Prisma, bcrypt, Stripe secret key, JWT signing). Never imported from a `'use client'` file.
+> - **`shared/`** — pure modules safe to import from either runtime.
+> - **`data/`** — static demo data used by client components when wiring up the UI without the database.
 
 ---
 
@@ -225,7 +246,7 @@ Authorization: Bearer <jwt_token>
 | `/products` | Full product catalog with filtering and search |
 | `/products/[id]` | Product detail with image gallery and add-to-cart |
 | `/cart` | Shopping cart with quantity management and order summary |
-| `/checkout` | Stripe embedded checkout with shipping and payment |
+| `/checkout` | Shipping address form, Stripe payment, and order confirmation |
 | `/login` | User login |
 | `/register` | New user registration |
 
@@ -234,7 +255,7 @@ Authorization: Bearer <jwt_token>
 | Route | Description |
 |---|---|
 | `/admin` | Dashboard with statistics and recent orders |
-| `/admin/products` | Product listing and management |
+| `/admin/products` | Product listing with add and delete |
 | `/admin/orders` | Order listing with status update controls |
 
 ---
@@ -247,16 +268,20 @@ Authorization: Bearer <jwt_token>
 git clone https://github.com/XynoxTheDev/CU-Qollabb-MCA.git
 cd CU-Qollabb-MCA
 npm install
-npx prisma generate && npx prisma migrate dev && npx tsx prisma/seed.ts
+npx prisma migrate dev
+npx tsx prisma/seed.ts
 npm run dev
 ```
 
 > [!NOTE]
 > Before starting, create a `.env` file in the project root — see [Environment Variables](#environment-variables). Then open [http://localhost:3000](http://localhost:3000). The app is running when the Shopiverse navbar and hero banner are visible.
 
+> [!NOTE]
+> `npm install` automatically runs `prisma generate` (via the `postinstall` script), so a separate `prisma generate` call isn't required.
+
 ### Prerequisites
 
-- Node.js 18.x or later
+- Node.js **20.x or later** (Node 18 is deprecated and is not supported by Next.js 16)
 - npm 9.x or later
 - A Stripe account (free) for payment functionality — test keys are sufficient
 
@@ -277,10 +302,9 @@ npm run dev
 
 3. Create a `.env` file in the project root — see [Environment Variables](#environment-variables).
 
-4. Set up the database:
+4. Run database migrations and seed:
 
    ```bash
-   npx prisma generate
    npx prisma migrate dev
    npx tsx prisma/seed.ts
    ```
@@ -303,14 +327,6 @@ npm run build
 npm start
 ```
 
-### Running Tests
-
-```bash
-npm test           # Run tests in watch mode
-npm run test:run   # Run tests once
-npm run test:coverage  # Run tests with coverage report
-```
-
 ---
 
 ## Environment Variables
@@ -328,19 +344,26 @@ STRIPE_PUBLISHABLE_KEY="pk_test_..."
 > Never commit `.env` to version control. It is already listed in `.gitignore`.
 
 > [!NOTE]
-> Stripe keys are optional for local development — all features except checkout will work without them. Get free test keys from the [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys).
+> `next.config.ts` exposes `STRIPE_PUBLISHABLE_KEY` to the browser as `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`. You only need to set `STRIPE_PUBLISHABLE_KEY` (without the `NEXT_PUBLIC_` prefix) — the mapping happens at build time.
+
+> [!NOTE]
+> Stripe keys are optional for local development — all features except checkout work without them. Get free test keys from the [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys).
 
 ---
 
 ## Database
 
+### Engine
+
+SQLite, driven by Prisma ORM. The database file lives at `prisma/dev.db` and is gitignored.
+
 ### Schema
 
 | Model | Key Fields |
 |---|---|
-| `User` | `id`, `email`, `name`, `password` (bcrypt hash), `role` (default: `customer`), `avatar`, `createdAt` |
-| `Product` | `id`, `name`, `description`, `price`, `originalPrice`, `image`, `images`, `category`, `rating`, `reviewCount`, `stock` |
-| `Order` | `id`, `userId`, `total`, `status` (default: `pending`), `shippingAddress`, `paymentMethod`, `createdAt` |
+| `User` | `id`, `email`, `name`, `password` (bcrypt hash), `role` (default: `customer`), `avatar`, `createdAt`, `updatedAt` |
+| `Product` | `id`, `name`, `description`, `price`, `originalPrice`, `image`, `images`, `category`, `rating`, `reviewCount`, `stock`, `createdAt`, `updatedAt` |
+| `Order` | `id`, `userId`, `total`, `status` (default: `pending`), `shippingAddress`, `paymentMethod`, `createdAt`, `updatedAt` |
 | `OrderItem` | `id`, `orderId`, `productId`, `quantity`, `price` — cascade deletes with parent order |
 
 ### Seed Data
@@ -349,7 +372,58 @@ STRIPE_PUBLISHABLE_KEY="pk_test_..."
 npx tsx prisma/seed.ts
 ```
 
-Populates the database with 2 demo accounts and 20 products across 4 categories.
+Populates the database with 2 demo accounts and 19 products across 4 categories.
+
+---
+
+## Scripts
+
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Start the Next.js dev server on port 3000 |
+| `npm run build` | Production build |
+| `npm start` | Run the production build |
+| `npm run lint` | Run ESLint with the flat config |
+| `npm test` | Vitest in watch mode |
+| `npm run test:run` | Vitest single run |
+| `npm run test:coverage` | Vitest with v8 coverage reporter |
+
+---
+
+## Testing
+
+Vitest with jsdom is the test runner. Tests live in `tests/` and are split into:
+
+- `tests/unit/` — pure-function unit tests (e.g. `auth.ts` helpers, `utils.ts`)
+- `tests/api/` — API route handler tests using `next-test-api-route-handler` with mocked Prisma
+- `tests/components/` — React component tests with Testing Library
+
+`tests/setup.ts` mocks `next/navigation` globally and sets fixed test-only env vars (`JWT_SECRET`, `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `DATABASE_URL`).
+
+Run all tests once:
+
+```bash
+npm run test:run
+```
+
+Generate a coverage report (HTML written to `coverage/`):
+
+```bash
+npm run test:coverage
+```
+
+---
+
+## Continuous Integration
+
+`.github/workflows/ci.yml` runs on every push and pull request to `main`. Jobs run in sequence:
+
+1. **lint-and-typecheck** — `npm run lint`, then `npx tsc --noEmit`
+2. **test** — `npm run test:coverage` with test-only env, uploads coverage artifact and (optionally) reports to Codecov
+3. **build** — `npm run build`
+4. **deploy** — only on push to `main`: `vercel pull → vercel build --prod → vercel deploy --prebuilt --prod` (requires `VERCEL_TOKEN`)
+
+All jobs run on Node 20.
 
 ---
 
@@ -380,6 +454,8 @@ Contributions are welcome. To get your PR merged without back-and-forth:
 4. **Run checks** before pushing:
    ```bash
    npm run lint
+   npx tsc --noEmit
+   npm run test:run
    npm run build
    ```
 5. **Open a PR** against `main` with a clear description of what changed and why.

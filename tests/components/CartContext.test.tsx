@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { CartProvider, useCart } from '@/context/CartContext'
 import React from 'react'
-import { Product } from '@/lib/types'
+import { Product } from '@/lib/shared/types'
 
 const mockProduct: Product = {
   id: 'prod-1',

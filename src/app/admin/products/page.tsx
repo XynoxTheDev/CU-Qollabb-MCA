@@ -6,8 +6,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Plus, Search, Edit, Trash2, Package, Menu, Settings } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { products as initialProducts, categories } from '@/lib/data';
-import { Product } from '@/lib/types';
+import { products as initialProducts, categories } from '@/lib/data/mock-data';
+import { Product } from '@/lib/shared/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -33,7 +33,7 @@ export default function AdminProductsPage() {
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
   const [products, setProducts] = useState<Product[]>(initialProducts);
-  const [searchSuery, setSearchSuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [newProduct, setNewProduct] = useState({
@@ -56,8 +56,8 @@ export default function AdminProductsPage() {
   }
 
   const filteredProducts = products.filter(p =>
-    p.name.toLowerCase().includes(searchSuery.toLowerCase()) ||
-    p.category.toLowerCase().includes(searchSuery.toLowerCase())
+    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    p.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleDeleteProduct = (id: string) => {
@@ -256,8 +256,8 @@ export default function AdminProductsPage() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <Input 
                   placeholder="Search products..."
-                  value={searchSuery}
-                  onChange={(e) => setSearchSuery(e.target.value)}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
                 />
               </div>

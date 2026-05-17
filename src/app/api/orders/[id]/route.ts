@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
-import { requireAuth, requireAdmin } from '@/lib/authMiddleware';
+import { prisma } from '@/lib/server/db';
+import { requireAuth, requireAdmin } from '@/lib/server/auth-middleware';
 
 export async function GET(
   request: Request,

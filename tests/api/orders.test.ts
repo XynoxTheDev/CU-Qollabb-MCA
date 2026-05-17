@@ -2,10 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { testApiHandler } from 'next-test-api-route-handler'
 import * as ordersHandler from '@/app/api/orders/route'
-import { prisma } from '@/lib/db'
-import * as authMiddleware from '@/lib/authMiddleware'
+import { prisma } from '@/lib/server/db'
+import * as authMiddleware from '@/lib/server/auth-middleware'
 
-vi.mock('@/lib/db', () => ({
+vi.mock('@/lib/server/db', () => ({
   prisma: {
     order: {
       findMany: vi.fn(),
@@ -20,7 +20,7 @@ vi.mock('@/lib/db', () => ({
   },
 }))
 
-vi.mock('@/lib/authMiddleware', () => ({
+vi.mock('@/lib/server/auth-middleware', () => ({
   authMiddleware: vi.fn(),
   requireAuth: vi.fn(),
 }))

@@ -3,9 +3,9 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { testApiHandler } from 'next-test-api-route-handler'
 import * as productsHandler from '@/app/api/products/route'
 import * as productByIdHandler from '@/app/api/products/[id]/route'
-import { prisma } from '@/lib/db'
+import { prisma } from '@/lib/server/db'
 
-vi.mock('@/lib/db', () => ({
+vi.mock('@/lib/server/db', () => ({
   prisma: {
     product: {
       findMany: vi.fn(),

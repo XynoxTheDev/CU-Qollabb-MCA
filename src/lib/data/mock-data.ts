@@ -1,4 +1,4 @@
-import { Product, User, Order, Category } from './types';
+import { Product, User, Order, Category } from '@/lib/shared/types';
 
 export const categories: Category[] = [
   { id: '1', name: 'Electronics', icon: 'Smartphone', productCount: 8 },
@@ -53,7 +53,7 @@ export const products: Product[] = [
   {
     id: '4',
     name: 'Wireless Earbuds Pro',
-    description: 'True wireless earbuds with noise cancellation,透明模式和 premium audio quality. Includes charging case.',
+    description: 'True wireless earbuds with noise cancellation and premium audio quality. Includes charging case.',
     price: 179.99,
     originalPrice: 229.99,
     image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=800&h=800&fit=crop',
@@ -334,7 +334,7 @@ export const getProductsByCategory = (category: string): Product[] => {
 
 export const searchProducts = (query: string): Product[] => {
   const lowerQuery = query.toLowerCase();
-  return products.filter(p => 
+  return products.filter(p =>
     p.name.toLowerCase().includes(lowerQuery) ||
     p.description.toLowerCase().includes(lowerQuery) ||
     p.category.toLowerCase().includes(lowerQuery)

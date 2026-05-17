@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, Star, Minus, Plus, ShoppingCart, Truck, RotateCcw, Shield, ChevronDown, ChevronUp } from 'lucide-react';
-import { getProductById, products } from '@/lib/data';
+import { getProductById, products } from '@/lib/data/mock-data';
 import { useCart } from '@/context/CartContext';
 import ProductCard from '@/components/products/ProductCard';
 import { Button } from '@/components/ui/button';

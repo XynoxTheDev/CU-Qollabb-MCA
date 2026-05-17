@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { LayoutDashboard, Package, ShoppingCart, Users, Settings, DollarSign, ShoppingBag, Menu } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { products, orders } from '@/lib/data';
+import { products, orders } from '@/lib/data/mock-data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Sheet, SheetContent } from '@/components/ui/sheet';

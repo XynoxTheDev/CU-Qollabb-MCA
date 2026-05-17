@@ -1,4 +1,4 @@
-import { verifyToken, AuthUser } from '@/lib/auth';
+import { verifyToken, AuthUser } from '@/lib/server/auth';
 
 export interface AuthRequest extends Request {
   user?: AuthUser;
@@ -6,7 +6,7 @@ export interface AuthRequest extends Request {
 
 export async function authMiddleware(request: AuthRequest): Promise<AuthUser | null> {
   const authHeader = request.headers.get('Authorization');
-  
+
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return null;
   }
@@ -23,7 +23,7 @@ export async function authMiddleware(request: AuthRequest): Promise<AuthUser | n
 
 export async function requireAuth(request: AuthRequest) {
   const user = await authMiddleware(request);
-  
+
   if (!user) {
     throw new Error('Unauthorized');
   }
@@ -33,7 +33,7 @@ export async function requireAuth(request: AuthRequest) {
 
 export async function requireAdmin(request: AuthRequest) {
   const user = await authMiddleware(request);
-  
+
   if (!user || user.role !== 'admin') {
     throw new Error('Forbidden');
   }

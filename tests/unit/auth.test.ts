@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, it, expect } from 'vitest'
-import { hashPassword, verifyPassword, createToken, verifyToken } from '@/lib/auth'
+import { hashPassword, verifyPassword, createToken, verifyToken } from '@/lib/server/auth'
 
 describe('auth.ts', () => {
   describe('hashPassword', () => {
