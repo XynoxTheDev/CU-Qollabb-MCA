@@ -22,8 +22,6 @@ export default defineConfig({
         '**/*.config.{js,ts,mjs}',
         '**/dist/',
         '**/tests/**',
-      ],
-      collectCoverageFrom: [
         'src/**/*.{ts,tsx}',
         '!src/**/*.d.ts',
         '!src/**/index.ts',

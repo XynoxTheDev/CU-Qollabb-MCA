@@ -6,7 +6,7 @@ Shopiverse covers the complete shopping lifecycle — product catalog, cart, Str
 
 <div align="center">
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.2.3-brightgreen?style=flat&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.6-brightgreen?style=flat&logo=next.js&logoColor=white)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.4-brightgreen?style=flat&logo=react&logoColor=white)](https://react.dev)
 [![Prisma](https://img.shields.io/badge/Prisma-5.22.0-brightgreen?style=flat&logo=prisma&logoColor=white)](https://prisma.io)
 [![Stripe](https://img.shields.io/badge/Stripe-22.1.0-brightgreen?style=flat&logo=stripe&logoColor=white)](https://stripe.com)
@@ -57,7 +57,7 @@ Shopiverse is a full-stack e-commerce application built on the Next.js App Route
 
 | Category | Technology | Version |
 |---|---|---|
-| Framework | Next.js (App Router) | 16.2.3 |
+| Framework | Next.js (App Router) | 16.2.6 |
 | Language | TypeScript | 5 |
 | UI Framework | React | 19.2.4 |
 | Styling | Tailwind CSS | 4 |
