@@ -6,7 +6,7 @@ Shopiverse covers the complete shopping lifecycle — product catalog, cart, Str
 
 <div align="center">
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.2.2-brightgreen?style=flat&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.3-brightgreen?style=flat&logo=next.js&logoColor=white)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.4-brightgreen?style=flat&logo=react&logoColor=white)](https://react.dev)
 [![Prisma](https://img.shields.io/badge/Prisma-5.22.0-brightgreen?style=flat&logo=prisma&logoColor=white)](https://prisma.io)
 [![Stripe](https://img.shields.io/badge/Stripe-22.1.0-brightgreen?style=flat&logo=stripe&logoColor=white)](https://stripe.com)
@@ -57,7 +57,7 @@ Shopiverse is a full-stack e-commerce application built on the Next.js App Route
 
 | Category | Technology | Version |
 |---|---|---|
-| Framework | Next.js (App Router) | 16.2.2 |
+| Framework | Next.js (App Router) | 16.2.3 |
 | Language | TypeScript | 5 |
 | UI Framework | React | 19.2.4 |
 | Styling | Tailwind CSS | 4 |
@@ -69,6 +69,8 @@ Shopiverse is a full-stack e-commerce application built on the Next.js App Route
 | Payments | Stripe | 22.1.0 |
 | Icons | Lucide React | 1.7.0 |
 | Notifications | Sonner | 2.0.7 |
+| HTTP Runtime | hono | 4.12.15 |
+| Testing | vitest | 4.1.6 |
 
 ---
 
@@ -300,6 +302,14 @@ npm run dev
 ```bash
 npm run build
 npm start
+```
+
+### Running Tests
+
+```bash
+npm test           # Run tests in watch mode
+npm run test:run   # Run tests once
+npm run test:coverage  # Run tests with coverage report
 ```
 
 ---
