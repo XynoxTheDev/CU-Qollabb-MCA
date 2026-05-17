@@ -15,6 +15,14 @@ SQLite, driven by Prisma ORM. The database file lives at `prisma/dev.db` and is 
 
 Source: [`prisma/schema.prisma`](../prisma/schema.prisma).
 
+> [!IMPORTANT]
+> SQLite has no native JSON or array type, so two fields are stored as JSON-encoded `String`:
+>
+> - `Product.images` — `string` holding `JSON.stringify(string[])`
+> - `Order.shippingAddress` — `string` holding `JSON.stringify({ fullName, email, phone, address, city, state, zip, country })`
+>
+> Anything consuming these columns must `JSON.parse` them. The `Product.images` field is also nullable; the seeded products only set it for product `1`.
+
 ## Migrations
 
 ```bash
