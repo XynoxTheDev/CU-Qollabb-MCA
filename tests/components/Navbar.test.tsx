@@ -86,17 +86,9 @@ describe('Navbar', () => {
 
     const user = userEvent.setup()
     render(<Navbar />)
-    const logoutButtons = screen.getAllByRole('button', { name: '' })
-    const logoutButton = logoutButtons.find(b => {
-      const svg = b.querySelector('svg')
-      const cls = svg?.getAttribute('class') ?? ''
-      return cls.includes('lucide-log-out')
-    })
-    expect(logoutButton).toBeDefined()
-    if (logoutButton) {
-      await user.click(logoutButton)
-      expect(logoutMock).toHaveBeenCalled()
-    }
+    const logoutButton = screen.getByRole('button', { name: /log out/i })
+    await user.click(logoutButton)
+    expect(logoutMock).toHaveBeenCalled()
   })
 
   it('should display cart count', () => {

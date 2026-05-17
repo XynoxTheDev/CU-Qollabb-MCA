@@ -32,7 +32,6 @@ Shopiverse covers the complete shopping lifecycle — product catalog, cart, Str
 10. [Demo Accounts](#demo-accounts)
 11. [Contributing](#contributing)
 12. [License](#license)
-13. [Development Roadmap](#development-roadmap)
 
 ---
 
@@ -397,18 +396,6 @@ Licensed under the **MIT License** — see [LICENSE](LICENSE) for the full text.
 ```
 SPDX-License-Identifier: MIT
 ```
-
----
-
-## Development Roadmap
-
-| Phase | Status | Scope |
-|---|---|---|
-| Phase 1 — Frontend | Completed | All pages, components, and styling |
-| Phase 2 — Backend | Completed | REST API, SQLite/Prisma, JWT authentication |
-| Phase 3 — Payments | Completed | Stripe embedded checkout and payment intent API |
-| Phase 4 — Testing & Deployment | Planned | Unit/integration tests, CI/CD pipeline, production hosting |
-| Phase 5 — Performance & Polish | Planned | Lighthouse audits, bundle optimization, accessibility improvements |
 
 ---
 

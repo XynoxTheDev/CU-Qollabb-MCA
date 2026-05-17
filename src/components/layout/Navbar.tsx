@@ -40,35 +40,50 @@ export default function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex h-14 md:h-16 items-center justify-between gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <div className="flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-lg bg-primary text-white font-bold">
+          <Link
+            href="/"
+            aria-label="Shopiverse home"
+            className="flex items-center gap-2 flex-shrink-0 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          >
+            <div aria-hidden="true" className="flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-lg bg-primary text-white font-bold">
               S
             </div>
             <span className="text-lg font-bold text-slate-900 hidden sm:block">Shopiverse</span>
           </Link>
 
           {/* Desktop Navigation - Centered */}
-          <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
-            {navLinks.slice(0, 5).map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === link.href ? 'text-primary' : 'text-slate-600'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <nav aria-label="Primary" className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+            {navLinks.slice(0, 5).map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`text-sm font-medium transition-colors hover:text-primary rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+                    isActive ? 'text-primary' : 'text-slate-600'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right Side */}
           <div className="flex items-center gap-2">
             {/* Cart */}
-            <Link href="/cart" className="relative p-2 hover:bg-slate-100 rounded-full">
-              <ShoppingCart className="h-5 w-5 text-slate-700" />
+            <Link
+              href="/cart"
+              aria-label={cartCount > 0 ? `Cart, ${cartCount} item${cartCount === 1 ? '' : 's'}` : 'Cart, empty'}
+              className="relative p-2 hover:bg-slate-100 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
+              <ShoppingCart aria-hidden="true" className="h-5 w-5 text-slate-700" />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white font-medium">
+                <span
+                  aria-hidden="true"
+                  className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white font-medium"
+                >
                   {cartCount}
                 </span>
               )}
@@ -91,8 +106,14 @@ export default function Navbar() {
                   </div>
                   <span className="text-sm text-slate-700 hidden lg:block">{user?.name?.split(' ')[0]}</span>
                 </Link>
-                <Button variant="ghost" size="icon" onClick={logout} className="h-8 w-8 text-slate-500 hover:text-red-500">
-                  <LogOut className="h-3.5 w-3.5" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={logout}
+                  aria-label="Log out"
+                  className="h-8 w-8 text-slate-500 hover:text-red-500"
+                >
+                  <LogOut aria-hidden="true" className="h-3.5 w-3.5" />
                 </Button>
               </div>
             ) : (
@@ -108,18 +129,21 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 size="icon"
                 className="lg:hidden"
+                aria-label="Open menu"
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu"
                 onClick={() => setIsMobileMenuOpen(true)}
               >
-                <Menu className="h-5 w-5" />
+                <Menu aria-hidden="true" className="h-5 w-5" />
               </Button>
-              <SheetContent side="right" className="w-[280px] sm:w-[320px]">
+              <SheetContent id="mobile-menu" side="right" className="w-[280px] sm:w-[320px]">
                 <div className="flex flex-col gap-4 pt-12">
                   {/* Mobile Nav Links */}
-                  <nav className="space-y-1">
+                  <nav aria-label="Mobile" className="space-y-1">
                     {navLinks.map((link) => (
                       <Link
                         key={link.href}

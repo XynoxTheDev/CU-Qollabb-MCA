@@ -23,10 +23,12 @@ export default function HomePage() {
           ) : (
             <Image
               src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&h=1080&fit=crop"
-              alt="Hero"
+              alt=""
               fill
-              className="object-cover"
+              sizes="100vw"
               priority
+              fetchPriority="high"
+              className="object-cover"
               onError={() => setHeroError(true)}
             />
           )}
@@ -58,22 +60,24 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {categories.map((category, index) => (
-              <Link 
-                key={category.id} 
+              <Link
+                key={category.id}
                 href={`/products?category=${category.name}`}
-                className="group relative aspect-square rounded-xl overflow-hidden"
+                aria-label={`Shop ${category.name}`}
+                className="group relative aspect-square rounded-xl overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <Image
-                  src={index === 0 
+                  src={index === 0
                     ? 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=600&h=600&fit=crop'
-                    : index === 1 
+                    : index === 1
                     ? 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop'
-                    : index === 2 
+                    : index === 2
                     ? 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop'
                     : 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=600&h=600&fit=crop'
                   }
-                  alt={category.name}
+                  alt=""
                   fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -112,8 +116,10 @@ export default function HomePage() {
             ) : (
               <Image
                 src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1920&h=600&fit=crop"
-                alt="Banner"
+                alt=""
                 fill
+                sizes="100vw"
+                loading="lazy"
                 className="object-cover"
                 onError={() => setBannerError(true)}
               />
@@ -140,13 +146,17 @@ export default function HomePage() {
           <div className="max-w-xl mx-auto text-center">
             <h2 className="text-xl font-bold text-white mb-2">Stay Updated</h2>
             <p className="text-slate-400 text-sm mb-4">Subscribe for exclusive offers and updates</p>
-            <form className="flex gap-2">
+            <form className="flex gap-2" aria-label="Newsletter subscription">
+              <label htmlFor="newsletter-email" className="sr-only">Email address</label>
               <input
+                id="newsletter-email"
                 type="email"
+                required
+                autoComplete="email"
                 placeholder="Your email"
                 className="flex-1 px-4 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-white placeholder:text-slate-500 text-sm focus:outline-none focus:border-primary"
               />
-              <Button className="px-6 rounded-full text-sm">Subscribe</Button>
+              <Button type="submit" className="px-6 rounded-full text-sm">Subscribe</Button>
             </form>
           </div>
         </div>
