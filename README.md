@@ -59,11 +59,13 @@ DATABASE_URL="file:./prisma/dev.db"
 JWT_SECRET="change-me-to-a-long-random-string"
 STRIPE_SECRET_KEY="sk_test_..."
 STRIPE_PUBLISHABLE_KEY="pk_test_..."
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_..."
 ```
 
 > [!WARNING]
 > Never commit `.env`. It is already in `.gitignore`.
+
+> [!NOTE]
+> `next.config.ts` exposes `STRIPE_PUBLISHABLE_KEY` to the browser as `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` — you only need to set the non-prefixed one.
 
 > [!NOTE]
 > Stripe keys are optional for local development — all features except checkout work without them. Get free test keys from the [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys).
