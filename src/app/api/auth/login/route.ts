@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 import { prisma } from '@/lib/server/db';
 import { verifyPassword, createToken } from '@/lib/server/auth';
+import { AUTH_COOKIE } from '@/lib/server/auth-middleware';
+
+const SEVEN_DAYS = 60 * 60 * 24 * 7;
 
 export async function POST(request: Request) {
   try {
@@ -40,6 +44,15 @@ export async function POST(request: Request) {
       role: user.role,
     });
 
+    const cookieStore = await cookies();
+    cookieStore.set(AUTH_COOKIE, token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: SEVEN_DAYS,
+    });
+
     return NextResponse.json({
       user: {
         id: user.id,
@@ -47,7 +60,6 @@ export async function POST(request: Request) {
         email: user.email,
         role: user.role,
       },
-      token,
     });
   } catch (error) {
     console.error('Login error:', error);

@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const user = await requireAuth(request);
+    const user = await requireAuth();
 
     const where = user.role === 'admin' 
       ? { id } 
@@ -54,7 +54,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await requireAdmin(request);
+    await requireAdmin();
     const { id } = await params;
 
     const body = await request.json();
