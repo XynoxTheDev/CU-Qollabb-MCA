@@ -12,7 +12,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const user = await requireAuth(request);
+    const user = await requireAuth();
 
     const body = await request.json();
     const { items, shippingAddress, paymentMethod } = body;

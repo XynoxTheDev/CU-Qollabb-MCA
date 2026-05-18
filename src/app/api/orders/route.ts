@@ -4,7 +4,7 @@ import { authMiddleware, requireAuth } from '@/lib/server/auth-middleware';
 
 export async function GET(request: Request) {
   try {
-    const user = await authMiddleware(request);
+    const user = await authMiddleware();
     
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -48,7 +48,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const user = await requireAuth(request);
+    const user = await requireAuth();
 
     const body = await request.json();
     const { items, shippingAddress, paymentMethod } = body;

@@ -1,70 +1,73 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { UserWithoutPassword } from '@/lib/shared/types';
-import { users } from '@/lib/data/mock-data';
 
 interface AuthContextType {
   user: UserWithoutPassword | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
-  logout: () => void;
+  logout: () => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-function readStoredUser(): UserWithoutPassword | null {
-  if (typeof window === 'undefined') return null;
-  try {
-    const stored = window.localStorage.getItem('user');
-    return stored ? (JSON.parse(stored) as UserWithoutPassword) : null;
-  } catch {
-    return null;
-  }
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<UserWithoutPassword | null>(readStoredUser);
-  const isLoading = false;
+  const [user, setUser] = useState<UserWithoutPassword | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch('/api/auth/me', { credentials: 'same-origin' });
+        const data = await res.json();
+        if (!cancelled) setUser(data.user ?? null);
+      } catch {
+        if (!cancelled) setUser(null);
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    const foundUser = users.find(u => u.email === email && u.password === password);
-    if (foundUser) {
-      const userWithoutPassword: UserWithoutPassword = {
-        id: foundUser.id,
-        name: foundUser.name,
-        email: foundUser.email,
-        role: foundUser.role,
-      };
-      setUser(userWithoutPassword);
-      localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-      return true;
-    }
-    return false;
-  };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-  };
-
-  const register = async (name: string, email: string, _password: string): Promise<boolean> => {
-    void _password;
-    const exists = users.find(u => u.email === email);
-    if (exists) return false;
-
-    const newUser: UserWithoutPassword = {
-      id: String(users.length + 1),
-      name,
-      email,
-      role: 'customer',
-    };
-
-    setUser(newUser);
-    localStorage.setItem('user', JSON.stringify(newUser));
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ email, password }),
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    setUser(data.user);
     return true;
+  };
+
+  const register = async (name: string, email: string, password: string): Promise<boolean> => {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ name, email, password }),
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    setUser(data.user);
+    return true;
+  };
+
+  const logout = async (): Promise<void> => {
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'same-origin',
+    });
+    setUser(null);
   };
 
   return (
