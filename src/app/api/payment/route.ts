@@ -33,6 +33,7 @@ export async function POST(request: Request) {
 
     let subtotal = 0;
     const orderItems = [];
+    const productNames: string[] = [];
 
     for (const item of items) {
       const product = await prisma.product.findUnique({
@@ -54,6 +55,7 @@ export async function POST(request: Request) {
       }
 
       subtotal += product.price * item.quantity;
+      productNames.push(product.name);
       orderItems.push({
         productId: product.id,
         quantity: item.quantity,
@@ -90,19 +92,46 @@ export async function POST(request: Request) {
       }
     }
 
-    const paymentIntent = await createPaymentIntent(total, {
-      orderId: order.id,
-      userId: user.userId,
-      items: JSON.stringify(items.map((i: { productId: string; quantity: number }) => ({
-        productId: i.productId,
-        quantity: i.quantity,
-      }))),
-    });
+    const namePreview =
+      productNames.length > 2
+        ? `${productNames.slice(0, 2).join(', ')} +${productNames.length - 2} more`
+        : productNames.join(', ');
+    const description = `${namePreview} (Order ${order.id})`;
+
+    const { paymentIntent, currency, rate } = await createPaymentIntent(
+      total,
+      shippingAddress.country,
+      {
+        orderId: order.id,
+        userId: user.userId,
+        items: JSON.stringify(items.map((i: { productId: string; quantity: number }) => ({
+          productId: i.productId,
+          quantity: i.quantity,
+        }))),
+      },
+      {
+        description,
+        shipping: {
+          name: shippingAddress.fullName,
+          phone: shippingAddress.phone,
+          address: {
+            line1: shippingAddress.address,
+            city: shippingAddress.city,
+            state: shippingAddress.state,
+            postal_code: shippingAddress.zip,
+            country: shippingAddress.country,
+          },
+        },
+      }
+    );
 
     return NextResponse.json({
       clientSecret: paymentIntent?.client_secret || '',
       orderId: order.id,
       amount: total,
+      currency,
+      rate,
+      chargedAmount: total * rate,
     });
   } catch (error) {
     console.error('Payment error:', error);

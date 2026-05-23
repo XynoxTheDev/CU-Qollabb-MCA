@@ -174,7 +174,9 @@ describe('POST /api/payment', () => {
       updatedAt: new Date(),
     })
     vi.mocked(stripeModule.createPaymentIntent).mockResolvedValue({
-      client_secret: 'pi_secret_123',
+      paymentIntent: { client_secret: 'pi_secret_123' },
+      currency: 'usd',
+      rate: 1,
     } as unknown as Awaited<ReturnType<typeof stripeModule.createPaymentIntent>>)
 
     await testApiHandler({

@@ -74,6 +74,7 @@ function CheckoutContent() {
   const [orderComplete, setOrderComplete] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [orderId, setOrderId] = useState<string>('');
+  const [charge, setCharge] = useState<{ amount: number; currency: string } | null>(null);
   const [fallbackOrderId] = useState<string>(() => 'ORD-' + Date.now().toString().slice(-6));
   
   const [shippingInfo, setShippingInfo] = useState({
@@ -84,7 +85,7 @@ function CheckoutContent() {
     city: '',
     state: '',
     zip: '',
-    country: 'US',
+    country: 'IN',
   });
   
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
@@ -123,6 +124,8 @@ function CheckoutContent() {
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
 
+  const usd = (amount: number) => `$${amount.toFixed(2)}`;
+
   const handleCreatePayment = async () => {
     if (!shippingInfo.fullName || !shippingInfo.email || !shippingInfo.address || !shippingInfo.city || !shippingInfo.state || !shippingInfo.zip) {
       alert('Please fill in all shipping fields');
@@ -145,6 +148,7 @@ function CheckoutContent() {
       if (data.clientSecret) {
         setClientSecret(data.clientSecret);
         setOrderId(data.orderId);
+        setCharge({ amount: data.chargedAmount, currency: data.currency });
       } else {
         alert(data.error || 'Failed to create payment');
       }
@@ -200,12 +204,13 @@ function CheckoutContent() {
                   <div><Label htmlFor="zip">ZIP</Label><Input id="zip" value={shippingInfo.zip} onChange={(e) => setShippingInfo({ ...shippingInfo, zip: e.target.value })} required className="mt-1" /></div>
                   <div>
                     <Label htmlFor="country">Country</Label>
-                    <Select value={shippingInfo.country} onValueChange={(v) => setShippingInfo({ ...shippingInfo, country: v || 'US' })}>
+                    <Select value={shippingInfo.country} onValueChange={(v) => setShippingInfo({ ...shippingInfo, country: v || 'IN' })}>
                       <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="IN">India</SelectItem>
                         <SelectItem value="US">United States</SelectItem>
                         <SelectItem value="CA">Canada</SelectItem>
-                        <SelectItem value="UK">UK</SelectItem>
+                        <SelectItem value="GB">UK</SelectItem>
                         <SelectItem value="AU">Australia</SelectItem>
                       </SelectContent>
                     </Select>
@@ -223,6 +228,16 @@ function CheckoutContent() {
                     <Label htmlFor="cc" className="flex items-center gap-2"><CreditCard className="h-5 w-5" />Credit / Debit Card</Label>
                   </div>
                 </RadioGroup>
+
+                {charge && charge.currency !== 'usd' && (
+                  <div className="mt-4 rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm text-blue-900">
+                    You will be charged{' '}
+                    <span className="font-semibold">
+                      {new Intl.NumberFormat('en-US', { style: 'currency', currency: charge.currency.toUpperCase() }).format(charge.amount)}
+                    </span>{' '}
+                    <span className="text-blue-700">(≈ {usd(total)} converted for {shippingInfo.country})</span>
+                  </div>
+                )}
 
                 {paymentMethod === 'credit-card' && (
                   clientSecret ? (
@@ -251,20 +266,20 @@ function CheckoutContent() {
                         <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-slate-600 text-xs text-white">{item.quantity}</span>
                       </div>
                       <div className="flex-1 min-w-0"><p className="text-sm font-medium truncate">{item.product.name}</p></div>
-                      <span className="text-sm font-medium">${(item.product.price * item.quantity).toFixed(2)}</span>
+                      <span className="text-sm font-medium">{usd(item.product.price * item.quantity)}</span>
                     </div>
                   ))}
                 </div>
                 <Separator className="my-4" />
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between"><span>Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
-                  <div className="flex justify-between"><span>Shipping</span><span>{shipping === 0 ? <span className="text-green-600">Free</span> : `$${shipping.toFixed(2)}`}</span></div>
-                  <div className="flex justify-between"><span>Tax</span><span>${tax.toFixed(2)}</span></div>
+                  <div className="flex justify-between"><span>Subtotal</span><span>{usd(subtotal)}</span></div>
+                  <div className="flex justify-between"><span>Shipping</span><span>{shipping === 0 ? <span className="text-green-600">Free</span> : usd(shipping)}</span></div>
+                  <div className="flex justify-between"><span>Tax</span><span>{usd(tax)}</span></div>
                 </div>
                 <Separator className="my-4" />
                 <div className="flex justify-between mb-6">
                   <span className="text-lg font-semibold">Total</span>
-                  <span className="text-lg font-bold text-primary">${total.toFixed(2)}</span>
+                  <span className="text-lg font-bold text-primary">{usd(total)}</span>
                 </div>
                 <p className="text-xs text-slate-500 text-center">Secured by Stripe</p>
               </CardContent>
