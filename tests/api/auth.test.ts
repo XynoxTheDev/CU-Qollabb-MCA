@@ -104,7 +104,7 @@ describe('POST /api/auth/login', () => {
     })
   })
 
-  it('should return 200 with token on successful login', async () => {
+  it('should return 200 with user on successful login', async () => {
     vi.mocked(prisma.user.findUnique).mockResolvedValue({
       id: '1',
       email: 'test@example.com',
@@ -128,7 +128,7 @@ describe('POST /api/auth/login', () => {
         })
         expect(res.status).toBe(200)
         const json = await res.json()
-        expect(json.token).toBe('mock-token')
+        expect(json.token).toBeUndefined()
         expect(json.user.email).toBe('test@example.com')
       },
     })
@@ -199,7 +199,7 @@ describe('POST /api/auth/register', () => {
     })
   })
 
-  it('should return 200 with token on successful registration', async () => {
+  it('should return 200 with user on successful registration', async () => {
     vi.mocked(prisma.user.findUnique).mockResolvedValue(null)
     vi.mocked(prisma.user.create).mockResolvedValue({
       id: '2',
@@ -224,7 +224,7 @@ describe('POST /api/auth/register', () => {
         })
         expect(res.status).toBe(200)
         const json = await res.json()
-        expect(json.token).toBe('new-mock-token')
+        expect(json.token).toBeUndefined()
         expect(json.user.email).toBe('new@example.com')
       },
     })

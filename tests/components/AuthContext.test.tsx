@@ -19,22 +19,57 @@ const TestComponent = () => {
   )
 }
 
+// Default fetch mock: /api/auth/me returns unauthenticated, all mutations succeed
+function setupFetchMock({
+  meUser = null,
+  loginUser = { id: '1', name: 'John', email: 'john@example.com', role: 'customer' },
+  registerUser = { id: '2', name: 'New User', email: 'new@example.com', role: 'customer' },
+}: {
+  meUser?: object | null
+  loginUser?: object
+  registerUser?: object
+} = {}) {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn(async (url: string, options?: RequestInit) => {
+      const method = options?.method?.toUpperCase() ?? 'GET'
+
+      if (url === '/api/auth/me') {
+        return { ok: true, json: async () => ({ user: meUser }) }
+      }
+      if (url === '/api/auth/login' && method === 'POST') {
+        return { ok: true, json: async () => ({ user: loginUser }) }
+      }
+      if (url === '/api/auth/register' && method === 'POST') {
+        return { ok: true, json: async () => ({ user: registerUser }) }
+      }
+      if (url === '/api/auth/logout' && method === 'POST') {
+        return { ok: true, json: async () => ({}) }
+      }
+      return { ok: false, json: async () => ({}) }
+    })
+  )
+}
+
 describe('AuthContext', () => {
   beforeEach(() => {
-    localStorage.clear()
     vi.restoreAllMocks()
   })
 
-  it('should expose isLoading=false after mount', () => {
+  it('should expose isLoading=false after mount', async () => {
+    setupFetchMock()
     render(
       <AuthProvider>
         <TestComponent />
       </AuthProvider>
     )
-    expect(screen.getByTestId('loading').textContent).toBe('ready')
+    await waitFor(() => {
+      expect(screen.getByTestId('loading').textContent).toBe('ready')
+    })
   })
 
   it('should start as not authenticated', async () => {
+    setupFetchMock()
     render(
       <AuthProvider>
         <TestComponent />
@@ -46,6 +81,7 @@ describe('AuthContext', () => {
   })
 
   it('should login successfully with valid credentials', async () => {
+    setupFetchMock()
     const user = userEvent.setup()
     render(
       <AuthProvider>
@@ -63,6 +99,7 @@ describe('AuthContext', () => {
   })
 
   it('should logout successfully', async () => {
+    setupFetchMock()
     const user = userEvent.setup()
     render(
       <AuthProvider>
@@ -84,6 +121,7 @@ describe('AuthContext', () => {
   })
 
   it('should register a new user successfully', async () => {
+    setupFetchMock()
     const user = userEvent.setup()
     render(
       <AuthProvider>
